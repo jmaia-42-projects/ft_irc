@@ -1,6 +1,10 @@
 NAME		=	ircserv
 
-SRCS		=	main.cpp
+SRCS		=	main.cpp \
+				$(addprefix parser/, \
+					check_args_validity.cpp \
+				) \
+				convert.cpp
 
 _OBJS		=	${SRCS:.cpp=.o}
 OBJS		=	$(addprefix build/, $(_OBJS))
