@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/09 10:19:43 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/09 10:22:34 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av)
 		std::cout << "Error: accept failed" << std::endl;
 		return (1);
 	}
-	std::cout << "Connection accepted from " << inet_ntoa(clientAddress.sin_addr) << " using port " << ntohs(clientAddress.sin_port) << std::endl;
+	std::cout << "Connection accepted from " << inet_ntoa(clientAddress.sin_addr) << std::endl;
 
 	close(clientSocketFd);
     close(socketFd);
