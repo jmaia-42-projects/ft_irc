@@ -37,4 +37,7 @@ fclean	:	clean
 
 re		:	fclean ${NAME}
 
+test	: $(NAME)
+	./${NAME}
+
 .PHONY	:	all clean fclean re
