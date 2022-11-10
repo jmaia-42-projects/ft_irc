@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 13:28:45 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:36:08 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,15 @@ int	main(int ac, char **av)
     pollSet[0].events = POLLIN;
     inPoll++;
 
+	listen(serverSocketFd, 5);
+
 	while (1)
 	{
 		std::cout << "Enter in poll" << std::endl;
 		poll(pollSet, inPoll, 1000);
 		for(int i = 0; i < inPoll; i++)
 		{
-			if(pollSet[i].events == POLLIN)
+			if(pollSet[i].revents & POLLIN)
 			{
 				if(pollSet[i].fd == serverSocketFd)
 				{
@@ -92,6 +94,7 @@ int	main(int ac, char **av)
 					//Read on client socket => new message
 					std::cout << "New message" << std::endl;
 					char buffer[1024];
+					bzero(buffer, 1024);
 					int n = read(pollSet[i].fd, buffer, 1024);
 					if (n == -1)
 					{
