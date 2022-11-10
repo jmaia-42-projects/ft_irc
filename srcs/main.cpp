@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/09 10:22:34 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:02:59 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <vector>
 
 #include "parser.hpp"
 
@@ -59,6 +60,7 @@ int	main(int ac, char **av)
 	}
 	std::cout << "Listening started... " << std::endl;
 
+
 	struct sockaddr_in clientAddress;
 	socklen_t clientAddressLength = sizeof(clientAddress);
 	int clientSocketFd = accept(socketFd, (struct sockaddr *)&clientAddress, &clientAddressLength);
@@ -68,6 +70,18 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	std::cout << "Connection accepted from " << inet_ntoa(clientAddress.sin_addr) << std::endl;
+
+	char buffer[1025];
+	int readBytes = recv(clientSocketFd, buffer, 1024, 0);
+	if (readBytes < 0)
+	{
+		std::cout << "Error: read failed" << std::endl;
+		return (1);
+	}
+	buffer[readBytes] = '\0';
+	std::cout << "Message received: " << buffer << std::endl;
+	send(clientSocketFd, buffer, readBytes, 0);
+	
 
 	close(clientSocketFd);
     close(socketFd);
