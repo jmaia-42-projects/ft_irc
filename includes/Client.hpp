@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 14:28:59 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:31:37 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ class Client
         ~Client(void);
 
         Client & operator=(Client const & rhs);
+
+        struct pollfd getPollFd(void) const;
 
     private:
         Client(void);

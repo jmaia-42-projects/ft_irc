@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 14:30:23 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:31:53 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,9 @@ Client & Client::operator=(Client const & rhs)
         this->_pollfd = rhs._pollfd;
     }
     return *this;
+}
+
+struct pollfd Client::getPollFd(void) const
+{
+    return _pollfd;
 }
