@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:07:12 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/08 22:13:48 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/10 11:52:03 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <string>
 
-int		to_int(std::string str);
-bool	is_number(std::string raw_number);
+int		toInt(std::string str);
+bool	isNumber(std::string rawNumber);
 
 #endif

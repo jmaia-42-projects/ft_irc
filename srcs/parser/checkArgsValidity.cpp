@@ -1,50 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args_validity.cpp                            :+:      :+:    :+:   */
+/*   checkArgsValidity.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:05:10 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/08 22:14:07 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/10 11:52:25 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.hpp"
 #include "convert.hpp"
 
-static bool	is_password_valid(char *raw_password);
-static bool	is_port_valid(char *raw_port);
+static bool	isPasswordValid(char *rawPassword);
+static bool	isPortValid(char *rawPort);
 
-int	check_args_validity(int ac, char **av)
+int	checkArgsValidity(int ac, char **av)
 {
 	if (ac != 3)
 		return (1);
-	if (!is_port_valid(av[1]))
+	if (!isPortValid(av[1]))
 		return (2);
-	if (!is_password_valid(av[2]))
+	if (!isPasswordValid(av[2]))
 		return (3);
 	return (0);
 }
 
-static bool	is_port_valid(char *raw_port)
+static bool	isPortValid(char *rawPort)
 {
-	std::string	str_port;
+	std::string	strPort;
 	int			port;
 
-	if (!raw_port)
+	if (!rawPort)
 		return (false);
-	str_port = std::string(raw_port);
-	if (str_port.empty() || !is_number(str_port))
+	strPort = std::string(rawPort);
+	if (strPort.empty() || !isNumber(strPort))
 		return (false);
-	port = to_int(str_port);
+	port = toInt(strPort);
 	if (port < 0 || port > 65535)
 		return (false);
 	return (true);
 }
 
-static bool	is_password_valid(char *raw_password)
+static bool	isPasswordValid(char *rawPassword)
 {
-	(void) raw_password;
+	(void) rawPassword;
 	return (true);
 }

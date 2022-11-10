@@ -2,7 +2,7 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				$(addprefix parser/, \
-					check_args_validity.cpp \
+					checkArgsValidity.cpp \
 				) \
 				convert.cpp
 

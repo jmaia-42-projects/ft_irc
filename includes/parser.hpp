@@ -6,13 +6,13 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:06:14 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/08 22:06:29 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/10 11:47:28 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
-int	check_args_validity(int ac, char **av);
+int	checkArgsValidity(int ac, char **av);
 
 #endif

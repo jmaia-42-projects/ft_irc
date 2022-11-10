@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:07:55 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/08 22:14:20 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/10 11:50:31 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "convert.hpp"
 
-int	to_int(std::string str)
+int	toInt(std::string str)
 {
 	std::stringstream	ss(str);
 	int					nbr;
@@ -23,9 +23,9 @@ int	to_int(std::string str)
 	return (nbr);
 }
 
-bool is_number(std::string raw_number)
+bool isNumber(std::string rawNumber)
 {
-	for (std::string::iterator it = raw_number.begin(); it != raw_number.end(); it++)
+	for (std::string::iterator it = rawNumber.begin(); it != rawNumber.end(); it++)
 		if (!isdigit(*it))
 			return (false);
 	return (true);
