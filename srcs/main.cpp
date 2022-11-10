@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 13:36:08 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:37:03 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	main(int ac, char **av)
 
 	while (1)
 	{
-		std::cout << "Enter in poll" << std::endl;
 		poll(pollSet, inPoll, 1000);
 		for(int i = 0; i < inPoll; i++)
 		{
