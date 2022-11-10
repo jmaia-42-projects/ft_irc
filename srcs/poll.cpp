@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 18:18:23 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:19:51 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@
 #define POLL_SIZE 1024
 #define REVC_BUFFER 4096
 
-struct pollfd *exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
+void    exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
 {
     pollSet[0].fd = serverSocket;
     pollSet[0].events = POLLIN;
     for (size_t i = 0; i < clients.size(); i++)
         pollSet[i + 1] = clients.at(i).getPollFd();
-    return pollSet;
 }
 
 void    acceptConnection(int serverSocket, std::vector<Client> &clients)
