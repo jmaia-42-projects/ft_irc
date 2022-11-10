@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 13:02:59 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:06:34 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <vector>
+#include <errno.h>
+#include <string.h>
 
 #include "parser.hpp"
 
@@ -36,7 +38,7 @@ int	main(int ac, char **av)
 	int socketFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (socketFd == -1)
 	{
-		std::cout << "Error: socket creation failed" << std::endl;
+		std::cout << "Error: socket creation failed: " << strerror(errno) << std::endl;
 		return (1);
 	}
 	std::cout << "Socket created" << std::endl;
@@ -47,7 +49,7 @@ int	main(int ac, char **av)
     serverAddress.sin_port = htons(PORT);
 	if (bind(socketFd, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0)
 	{
-		std::cout << "Error: bind failed" << std::endl;
+		std::cout << "Error: bind failed: " << strerror(errno) << std::endl;
 		return (1);
 	}
 	std::cout << "Bind done on port " << PORT << std::endl;
@@ -55,7 +57,7 @@ int	main(int ac, char **av)
 	const int maxPendingConnections = 10;
 	if (listen(socketFd, maxPendingConnections) < 0)
 	{
-		std::cout << "Error: listen failed" << std::endl;
+		std::cout << "Error: listen failed: " << strerror(errno) << std::endl;
 		return (1);
 	}
 	std::cout << "Listening started... " << std::endl;
@@ -66,19 +68,19 @@ int	main(int ac, char **av)
 	int clientSocketFd = accept(socketFd, (struct sockaddr *)&clientAddress, &clientAddressLength);
 	if (clientSocketFd < 0)
 	{
-		std::cout << "Error: accept failed" << std::endl;
+		std::cout << "Error: accept failed: " << strerror(errno) << std::endl;
 		return (1);
 	}
 	std::cout << "Connection accepted from " << inet_ntoa(clientAddress.sin_addr) << std::endl;
 
 	char buffer[1025];
+	bzero(buffer, 1025);
 	int readBytes = recv(clientSocketFd, buffer, 1024, 0);
 	if (readBytes < 0)
 	{
-		std::cout << "Error: read failed" << std::endl;
+		std::cout << "Error: read failed: " << strerror(errno) << std::endl;
 		return (1);
 	}
-	buffer[readBytes] = '\0';
 	std::cout << "Message received: " << buffer << std::endl;
 	send(clientSocketFd, buffer, readBytes, 0);
 	
