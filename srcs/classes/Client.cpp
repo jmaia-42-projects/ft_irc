@@ -6,11 +6,12 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 17:31:53 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:09:10 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
+#include <iostream>
 
 Client::Client(void): _socket(-1)
 {
@@ -19,7 +20,7 @@ Client::Client(void): _socket(-1)
 Client::Client(int socket): _socket(socket)
 {
     _pollfd.fd = socket;
-    _pollfd.events = POLLIN + POLLOUT;
+    _pollfd.events = POLLIN | POLLOUT;
 }
 
 Client::Client(Client const & src)
@@ -44,4 +45,9 @@ Client & Client::operator=(Client const & rhs)
 struct pollfd Client::getPollFd(void) const
 {
     return _pollfd;
+}
+
+int Client::getSocket(void) const
+{
+    return _socket;
 }

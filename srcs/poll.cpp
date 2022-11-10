@@ -6,10 +6,11 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 17:40:36 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:18:23 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <string.h>
 #include <poll.h>
 #include <stddef.h>
@@ -21,6 +22,7 @@
 #include "Client.hpp"
 
 #define POLL_SIZE 1024
+#define REVC_BUFFER 4096
 
 struct pollfd *exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
 {
@@ -47,7 +49,22 @@ void    acceptConnection(int serverSocket, std::vector<Client> &clients)
 
 void    acceptMessage(Client &client)
 {
-    (void)client;
+    std::string message;
+    char        buffer[REVC_BUFFER];
+    int         readed;
+
+    bzero(buffer, REVC_BUFFER);
+    while((readed = recv(client.getSocket(), buffer, REVC_BUFFER, MSG_DONTWAIT)) > 0)
+    {
+        if (readed == -1)
+        {
+            std::cout << "Error: recv failed: " << strerror(errno) << std::endl;
+            return;
+        }
+        message.append(buffer, readed);
+        bzero(buffer, REVC_BUFFER);
+    }
+    std::cout << "Message received: " << message << std::endl;
 }
 
 void    pollRoutine(int serverSocket)
@@ -63,7 +80,7 @@ void    pollRoutine(int serverSocket)
         poll(pollSet, inPoll, -1);
         for (int i = 0; i < inPoll; i++)
         {
-            if (pollSet[i].revents == POLLIN)
+            if (pollSet[i].revents & POLLIN)
             {
                 if (pollSet[i].fd == serverSocket)
                     acceptConnection(serverSocket, clients);
