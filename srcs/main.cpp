@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 13:37:03 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:40:47 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ int	main(int ac, char **av)
 						std::cout << buffer << std::endl;
 						if(strcmp(buffer, "exit") == 0)
 						{
+							for(int j = 0; j < inPoll; j++)
+							{
+								close(pollSet[j].fd);
+							}
 							close(serverSocketFd);
 							return (0);
 						}

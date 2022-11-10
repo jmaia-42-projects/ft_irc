@@ -43,12 +43,16 @@ int main(int argc, char *argv[])
         error("ERROR connecting");
     while(1)
     {
-        printf("Please enter the message: ");
+        printf("Please enter the message:\n");
         bzero(buffer,256);
-        fgets(buffer,255,stdin);
+        int readed = read(0, buffer, 255);
+        if(buffer[readed - 1] == '\n')
+            buffer[readed - 1] = '\0';
         n = write(sockfd, buffer, strlen(buffer));
         if (n < 0) 
             error("ERROR writing to socket");
+        if(strcmp(buffer, "exit") == 0)
+            break;
     }
     close(sockfd);
     return 0;
