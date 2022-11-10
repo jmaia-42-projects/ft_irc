@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 14:28:47 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:30:23 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ Client & Client::operator=(Client const & rhs)
 {
     if (this != &rhs)
     {
+        this->_socket = rhs._socket;
+        this->_pollfd = rhs._pollfd;
     }
     return *this;
 }
