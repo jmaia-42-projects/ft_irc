@@ -3,6 +3,7 @@ NAME		=	ircserv
 SRCS		=	main.cpp \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
+					parseArgs.cpp \
 				) \
 				convert.cpp \
 				initSocket.cpp
