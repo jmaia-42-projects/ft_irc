@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:59:11 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:04:16 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void    pollRoutine(int serverSocket)
                     std::string message = acceptMessage(clients.at(i - 1));
                     if (message.length() > 0)
                     {
-                        std::cout << "------ New message received ------" << std::endl << message << std::endl << "----------------------------------" << std::endl;
+                        std::cout << "------ New message received ------" << std::endl << message << "----------------------------------" << std::endl;
                         treatMessage(message, clients.at(i - 1), clients);
                     }
                     else
