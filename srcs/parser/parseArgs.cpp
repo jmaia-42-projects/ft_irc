@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:08:04 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/11 18:18:19 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/11 18:41:16 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parseArgs(int ac, char **av, unsigned short &port, std::string &password)
 {
 	int	err;
 
-	err = checkArgsValidity(ac, av);
+	err = checkArgsValidityAndPrintError(ac, av);
 	if (err)
 		return (err);
 	port = (unsigned short) toInt(std::string(av[1]));
