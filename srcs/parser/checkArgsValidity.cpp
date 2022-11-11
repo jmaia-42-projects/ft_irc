@@ -6,15 +6,38 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:05:10 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 11:52:25 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/11 18:18:33 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <iostream>
+#include <ostream>
 
 #include "parser.hpp"
 #include "convert.hpp"
 
 static bool	isPasswordValid(char *rawPassword);
 static bool	isPortValid(char *rawPort);
+
+int	checkArgsValidityAndPrintError(int ac, char **av)
+{
+	int	err;
+
+	err = checkArgsValidity(ac, av);
+	switch (err)
+	{
+		case 1:
+			std::cerr << "Usage: " << av[0] << " <port> <password>" << std::endl;
+			break;
+		case 2:
+			std::cerr << "Port is invalid !" << std::endl;
+			break;
+		case 3:
+			std::cerr << "Password is invalid !" << std::endl;
+			break;
+	}
+	return (err);
+}
 
 int	checkArgsValidity(int ac, char **av)
 {
