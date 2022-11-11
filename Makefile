@@ -4,7 +4,8 @@ SRCS		=	main.cpp \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
 				) \
-				convert.cpp
+				convert.cpp \
+				initSocket.cpp
 
 _OBJS		=	${SRCS:.cpp=.o}
 OBJS		=	$(addprefix build/, $(_OBJS))
