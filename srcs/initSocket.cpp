@@ -6,11 +6,12 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:54:34 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/11 18:00:57 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/11 18:02:26 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <netinet/in.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -18,6 +19,23 @@
 #include "initSocket.hpp"
 
 static struct sockaddr_in6	getAddr(unsigned short port);
+
+int	initSocketOrPrintError(unsigned short port)
+{
+	int	fd;
+
+	fd = initSocket(port);
+	switch (fd)
+	{
+		case -1:
+			perror("Bind error");
+			return (-1);
+		case -2:
+			perror("Listen error");
+			return (-2);
+	}
+	return (fd);
+}
 
 int	initSocket(unsigned short port)
 {
