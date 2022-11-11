@@ -2,6 +2,7 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
+				logic.cpp \
 				$(addprefix classes/, \
 					Client.cpp \
 				) \

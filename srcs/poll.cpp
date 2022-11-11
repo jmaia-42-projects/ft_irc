@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/10 18:19:51 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:59:11 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 #define POLL_SIZE 1024
 #define REVC_BUFFER 4096
+
+void    treatMessage(std::string message, Client &sender, std::vector<Client> &clients);
 
 void    exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
 {
@@ -46,7 +48,7 @@ void    acceptConnection(int serverSocket, std::vector<Client> &clients)
     clients.push_back(Client(clientserverSocketFd));
 }
 
-void    acceptMessage(Client &client)
+std::string    acceptMessage(Client &client)
 {
     std::string message;
     char        buffer[REVC_BUFFER];
@@ -58,12 +60,12 @@ void    acceptMessage(Client &client)
         if (readed == -1)
         {
             std::cout << "Error: recv failed: " << strerror(errno) << std::endl;
-            return;
+            break;
         }
         message.append(buffer, readed);
         bzero(buffer, REVC_BUFFER);
     }
-    std::cout << "Message received: " << message << std::endl;
+    return message;  
 }
 
 void    pollRoutine(int serverSocket)
@@ -84,7 +86,21 @@ void    pollRoutine(int serverSocket)
                 if (pollSet[i].fd == serverSocket)
                     acceptConnection(serverSocket, clients);
                 else
-                    acceptMessage(clients.at(i - 1));
+                {
+                    std::string message = acceptMessage(clients.at(i - 1));
+                    if (message.length() > 0)
+                    {
+                        std::cout << "------ New message received ------" << std::endl << message << std::endl << "----------------------------------" << std::endl;
+                        treatMessage(message, clients.at(i - 1), clients);
+                    }
+                    else
+                    {
+                        std::cout << "Client disconnected" << std::endl;
+                        clients.erase(clients.begin() + i - 1);
+                        i--;
+                        inPoll--;
+                    }
+                }
             }
         }
     }
