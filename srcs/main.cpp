@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/10 11:47:20 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/11 18:21:38 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 
 int	main(int ac, char **av)
 {
-	int	err;
+	int				err;
+	unsigned short	port;
+	std::string		password;
 
-	err = checkArgsValidity(ac, av);
+	err = parseArgs(ac, av, port, password);
 	if (err)
 		return (err);
 }
