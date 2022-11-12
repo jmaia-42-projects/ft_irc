@@ -1,6 +1,15 @@
 NAME		=	ircserv
 
 SRCS		=	main.cpp \
+				poll.cpp \
+				$(addprefix messages/, \
+					logic.cpp \
+					nick.cpp \
+				) \
+				$(addprefix classes/, \
+					Client.cpp \
+					Message.cpp \
+				) \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
 					parseArgs.cpp \
