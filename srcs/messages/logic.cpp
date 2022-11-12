@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:28:17 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:46:42 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void executeNick(Message &message, std::vector<Client> &clients);
 void executeUser(Message &message, std::vector<Client> &clients);
 void executePass(Message &message, std::vector<Client> &clients);
+void executeQuit(Message &message, std::vector<Client> &clients);
 
 void executeMessage(Message &message, std::vector<Client> &clients)
 {
@@ -35,7 +36,8 @@ void executeMessage(Message &message, std::vector<Client> &clients)
                 executeUser(message, clients);
             if (message.getSender().isLogged())
             {
-                //Next commands
+                if (message.getCommand() == "QUIT")
+                    executeQuit(message, clients);
             }
         }
     }
