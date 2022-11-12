@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 16:17:37 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:38:20 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ class Client
 
         void setNickname(std::string nickname);
         std::string getNickname(void) const;
+        void setUsername(std::string username);
+        std::string getUsername(void) const;
+        void setRealname(std::string realname);
+        std::string getRealname(void) const;
+        void log(void);
+        bool isLogged(void) const; 
 
     private:
         Client(void);
@@ -41,6 +47,9 @@ class Client
         int             _socket;
         struct pollfd   _pollfd;
         std::string     _nickname;
+        bool            _logged;
+        std::string     _username;
+        std::string     _realname;
 };
 
 #endif

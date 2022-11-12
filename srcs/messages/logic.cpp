@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 16:22:31 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:39:58 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
 #include "Message.hpp"
 
 void    executeNick(Message &message, std::vector<Client> &clients);
+void    executeUser(Message &message, std::vector<Client> &clients);
 
 void    executeMessage(Message &message, std::vector<Client> &clients)
 {
     if (message.getCommand() == "NICK")
         executeNick(message, clients);
+    else if (message.getCommand() == "USER")
+        executeUser(message, clients);
 }
 
 void    treatMessage(std::string message, Client &sender, std::vector<Client> &clients)

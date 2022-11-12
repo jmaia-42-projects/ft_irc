@@ -5,6 +5,7 @@ SRCS		=	main.cpp \
 				$(addprefix messages/, \
 					logic.cpp \
 					nick.cpp \
+					user.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \

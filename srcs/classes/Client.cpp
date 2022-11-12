@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 16:25:31 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:38:52 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1), _nickname("")
+Client::Client(void): _id(_globalId++), _socket(-1), _nickname(""), _logged(false), _username(""), _realname("")
 {
 }
 
-Client::Client(int socket): _socket(socket),  _nickname("")
+Client::Client(int socket): _socket(socket),  _nickname(""), _logged(false), _username(""), _realname("")
 {
     _id = _globalId++;
     _pollfd.fd = socket;
@@ -43,6 +43,9 @@ Client & Client::operator=(Client const & rhs)
         _socket = rhs._socket;
         _pollfd = rhs._pollfd;
         _nickname = rhs._nickname;
+        _logged = rhs._logged;
+        _username = rhs._username;
+        _realname = rhs._realname;
     }
     return *this;
 }
@@ -69,4 +72,29 @@ void Client::setNickname(std::string nickname)
 std::string Client::getNickname(void) const
 {
     return _nickname;
+}
+
+void Client::setUsername(std::string username)
+{
+    _username = username;
+}
+std::string Client::getUsername(void) const
+{
+    return _username;
+}
+void Client::setRealname(std::string realname)
+{
+    _realname = realname;
+}
+std::string Client::getRealname(void) const
+{
+    return _realname;
+}
+void Client::log(void)
+{
+    _logged = true;
+}
+bool Client::isLogged(void) const
+{
+    return _logged;
 }

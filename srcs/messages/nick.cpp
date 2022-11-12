@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 16:06:30 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:00:21 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:44:45 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void    executeNick(Message &message, std::vector<Client> &clients)
                 return ;
             }
         }
+        std::string oldNickname = message.getSender().getNickname();
         message.getSender().setNickname(message.getParameters().at(0));
+        if (oldNickname != "")
+            sendMessages(clients, oldNickname + " NICK " + message.getParameters().at(0));
     }
 }
