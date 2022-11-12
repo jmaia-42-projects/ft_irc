@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 14:13:39 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:25:31 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1)
+Client::Client(void): _id(_globalId++), _socket(-1), _nickname("")
 {
 }
 
-Client::Client(int socket): _socket(socket)
+Client::Client(int socket): _socket(socket),  _nickname("")
 {
     _id = _globalId++;
     _pollfd.fd = socket;
@@ -42,6 +42,7 @@ Client & Client::operator=(Client const & rhs)
         _id = rhs._id;
         _socket = rhs._socket;
         _pollfd = rhs._pollfd;
+        _nickname = rhs._nickname;
     }
     return *this;
 }
@@ -59,4 +60,13 @@ int Client::getSocket(void) const
 int Client::getId(void) const
 {
     return _id;
+}
+
+void Client::setNickname(std::string nickname)
+{
+    _nickname = nickname;
+}
+std::string Client::getNickname(void) const
+{
+    return _nickname;
 }

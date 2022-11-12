@@ -4,6 +4,7 @@ SRCS		=	main.cpp \
 				poll.cpp \
 				$(addprefix messages/, \
 					logic.cpp \
+					nick.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \

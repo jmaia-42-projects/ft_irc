@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 14:03:02 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:17:37 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CLIENT_HPP
 
 # include <poll.h>
+# include <string>
 
 class Client
 {
@@ -28,6 +29,9 @@ class Client
         int getSocket(void) const;
         int getId(void) const;
 
+        void setNickname(std::string nickname);
+        std::string getNickname(void) const;
+
     private:
         Client(void);
 
@@ -36,6 +40,7 @@ class Client
         int             _id;
         int             _socket;
         struct pollfd   _pollfd;
+        std::string     _nickname;
 };
 
 #endif
