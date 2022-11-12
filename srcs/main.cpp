@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/12 16:30:43 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:55:13 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,12 @@ void    pollRoutine(int serverSocket);
 int	main(int ac, char **av)
 {
 	
-	/*int	err;
-	err = check_args_validity(ac, av);
+	int	err;
+	err = checkArgsValidity(ac, av);
 	if (err)
-		return (err);*/
-	(void)ac;
-	(void)av;
-
-	int serverSocketFd = socket(AF_INET, SOCK_STREAM, 0);
-	if (serverSocketFd == -1)
-	{
-		std::cout << "Error: socket creation failed: " << strerror(errno) << std::endl;
-		return (1);
-	}
-	std::cout << "Socket created" << std::endl;
-
-	struct sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;  
-    serverAddress.sin_addr.s_addr = INADDR_ANY;  
-    serverAddress.sin_port = htons(PORT);
-	if (bind(serverSocketFd, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0)
-	{
-		std::cout << "Error: bind failed: " << strerror(errno) << std::endl;
-		return (1);
-	}
-	std::cout << "Bind done on port " << PORT << std::endl;
-
-	listen(serverSocketFd, 5);
-
-	pollRoutine(serverSocketFd);
+		return (err);
+	int listenFd = initSocketOrPrintError(PORT);
+	if (listenFd < 0)
+		return (2);
+	pollRoutine(listenFd);
 }

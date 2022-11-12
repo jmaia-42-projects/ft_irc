@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initSocket.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:54:34 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/11 18:02:26 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/12 16:53:06 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	initSocketOrPrintError(unsigned short port)
 	switch (fd)
 	{
 		case -1:
-			perror("Bind error");
+			perror("Socket error");
 			return (-1);
 		case -2:
-			perror("Listen error");
+			perror("Bind error");
 			return (-2);
+		case -3:
+			perror("Listen error");
+			return (-3);
 	}
 	return (fd);
 }
