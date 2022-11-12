@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 16:06:30 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 16:58:07 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:00:21 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ void    executeNick(Message &message, std::vector<Client> &clients)
             }
         }
         message.getSender().setNickname(message.getParameters().at(0));
-        sendMessage(message.getSender(), ":test 433 NICK :Nickname is already in use");
     }
 }
