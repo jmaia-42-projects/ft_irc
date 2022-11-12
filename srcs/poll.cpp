@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/11 17:04:16 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:15:43 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void    acceptConnection(int serverSocket, std::vector<Client> &clients)
 		std::cout << "Error: accept failed: " << strerror(errno) << std::endl;
 		return;
 	}
-    std::cout << "New connection" << std::endl;
-    clients.push_back(Client(clientserverSocketFd));
+    Client client(clientserverSocketFd);
+    std::cout << "New connection: Client " << client.getId() << std::endl;
+    clients.push_back(client);
 }
 
 std::string    acceptMessage(Client &client)
@@ -71,7 +72,7 @@ std::string    acceptMessage(Client &client)
 void    pollRoutine(int serverSocket)
 {
     std::vector<Client> clients;
-    int                 inPoll;
+    size_t              inPoll;
     
     while (1)
     {
@@ -79,7 +80,7 @@ void    pollRoutine(int serverSocket)
         struct pollfd pollSet[inPoll];
         exportPollSet(pollSet, serverSocket, clients);
         poll(pollSet, inPoll, -1);
-        for (int i = 0; i < inPoll; i++)
+        for (size_t i = 0; i < inPoll; i++)
         {
             if (pollSet[i].revents & POLLIN)
             {
@@ -87,18 +88,23 @@ void    pollRoutine(int serverSocket)
                     acceptConnection(serverSocket, clients);
                 else
                 {
-                    std::string message = acceptMessage(clients.at(i - 1));
-                    if (message.length() > 0)
+                    for(size_t j = 0; j < clients.size(); j++)
                     {
-                        std::cout << "------ New message received ------" << std::endl << message << "----------------------------------" << std::endl;
-                        treatMessage(message, clients.at(i - 1), clients);
-                    }
-                    else
-                    {
-                        std::cout << "Client disconnected" << std::endl;
-                        clients.erase(clients.begin() + i - 1);
-                        i--;
-                        inPoll--;
+                        if (clients.at(j).getSocket() == pollSet[i].fd)
+                        {
+                            Client &client = clients.at(j);
+                            std::string message = acceptMessage(client);
+                            if (message.length() > 0)
+                            {
+                                std::cout << "------ New message received from client " << client.getId() << " ------" << std::endl << message << "----------------------------------" << std::endl;
+                                treatMessage(message, client, clients);
+                            }
+                            else
+                            {
+                                std::cout << "Client " << client.getId() << " disconnected" << std::endl;
+                                clients.erase(clients.begin() + j);
+                            }
+                        }
                     }
                 }
             }
