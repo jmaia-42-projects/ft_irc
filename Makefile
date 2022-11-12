@@ -2,9 +2,12 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
-				logic.cpp \
+				$(addprefix messages/, \
+					logic.cpp \
+				) \
 				$(addprefix classes/, \
 					Client.cpp \
+					Message.cpp \
 				) \
 				$(addprefix parser/, \
 					check_args_validity.cpp \
