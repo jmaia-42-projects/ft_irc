@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user.cpp                                           :+:      :+:    :+:   */
+/*   pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:25:09 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:19:01 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);
 
-void    executeUser(Message &message, std::vector<Client> &clients)
+void    executePass(Message &message, std::vector<Client> &clients)
 {
     (void)clients;
-    if (message.getParameters().size() < 4)
+    if (message.getParameters().size() < 1)
         sendMessage(message.getSender(), "461 USER :Not enough parameters");
     else
     {
@@ -26,10 +26,10 @@ void    executeUser(Message &message, std::vector<Client> &clients)
             sendMessage(message.getSender(), "462 USER :You are already logged in");
         else
         {
-            message.getSender().setUsername(message.getParameters().at(0));
-            message.getSender().setRealname(message.getParameters().at(3));
-            message.getSender().log();
-            sendMessage(message.getSender(), "001 " + message.getSender().getNickname() + " :Welcome to the Internet Relay Network " + message.getSender().getNickname() + "!");
+            if (message.getParameters().at(0) == "motdepasse")
+                message.getSender().givePassword();
+            else
+                sendMessage(message.getSender(), "464 PASS :Password incorrect");
         }
     }
 }

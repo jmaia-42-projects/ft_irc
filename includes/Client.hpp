@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:38:20 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:17:14 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ class Client
         std::string getRealname(void) const;
         void log(void);
         bool isLogged(void) const; 
+        void givePassword(void);
+        bool hasGivedPassword(void) const;
 
     private:
         Client(void);
@@ -46,6 +48,7 @@ class Client
         int             _id;
         int             _socket;
         struct pollfd   _pollfd;
+        bool            _givedPassword;
         std::string     _nickname;
         bool            _logged;
         std::string     _username;

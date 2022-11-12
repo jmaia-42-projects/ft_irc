@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:38:52 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:24:23 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1), _nickname(""), _logged(false), _username(""), _realname("")
+Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname("")
 {
 }
 
-Client::Client(int socket): _socket(socket),  _nickname(""), _logged(false), _username(""), _realname("")
+Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname("")
 {
     _id = _globalId++;
     _pollfd.fd = socket;
@@ -46,6 +46,7 @@ Client & Client::operator=(Client const & rhs)
         _logged = rhs._logged;
         _username = rhs._username;
         _realname = rhs._realname;
+        _givedPassword = rhs._givedPassword;
     }
     return *this;
 }
@@ -97,4 +98,12 @@ void Client::log(void)
 bool Client::isLogged(void) const
 {
     return _logged;
+}
+void Client::givePassword(void)
+{
+    _givedPassword = true;
+}
+bool Client::hasGivedPassword(void) const
+{
+    return _givedPassword;
 }

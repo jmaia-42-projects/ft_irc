@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/12 16:57:34 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:28:27 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include "initSocket.hpp"
 #include "parser.hpp"
 
-#define PORT 3333
+#define PORT 3334
 
 void    pollRoutine(int serverSocket);
 
