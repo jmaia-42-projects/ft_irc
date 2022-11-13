@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logic.cpp                                          :+:      :+:    :+:   */
+/*   messageManager.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:29:04 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:49:28 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include <iostream>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include "Client.hpp"
-#include "Message.hpp"
-
-void executeNick(Message &message, std::vector<Client> &clients);
-void executeUser(Message &message, std::vector<Client> &clients);
-void executePass(Message &message, std::vector<Client> &clients);
-void executeQuit(Message &message, std::vector<Client> &clients);
+#include "messages.hpp"
 
 void executeMessage(Message &message, std::vector<Client> &clients)
 {

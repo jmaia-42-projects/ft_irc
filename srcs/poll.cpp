@@ -6,25 +6,11 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 14:17:53 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:51:02 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <string.h>
-#include <poll.h>
-#include <stddef.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <vector>
-#include <iostream>
-#include "Client.hpp"
-
-#define POLL_SIZE 1024
-#define REVC_BUFFER 4096
-
-void    treatMessage(std::string message, Client &sender, std::vector<Client> &clients);
+#include "poll.hpp"
 
 void    exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
 {

@@ -6,14 +6,11 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:29:49 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:48:51 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Message.hpp"
-
-void    sendMessage(Client &receiver, std::string text);
-void    sendMessages(std::vector<Client> &clients, std::string text);
+#include "messages.hpp"
 
 void    executeUser(Message &message, std::vector<Client> &clients)
 {

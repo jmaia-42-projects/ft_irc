@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.cpp                                           :+:      :+:    :+:   */
+/*   poll.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:48:48 by dhubleur         ###   ########.fr       */
+/*   Created: 2022/11/13 12:50:19 by dhubleur          #+#    #+#             */
+/*   Updated: 2022/11/13 12:50:52 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "messages.hpp"
+#ifndef POLL_HPP
+# define POLL_HPP
 
-void    executeQuit(Message &message, std::vector<Client> &clients)
-{
-    if (message.getParameters().size() < 1)
-        sendMessages(clients, ":" + message.getSender().getNickname() + " QUIT");
-    else
-    {
-        sendMessages(clients, ":" + message.getSender().getNickname() + " QUIT :" + message.getParameters().at(0));
-    }
-}
+# define POLL_SIZE 1024
+# define REVC_BUFFER 4096
+
+# include <errno.h>
+# include <string.h>
+# include <poll.h>
+# include <stddef.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+# include <vector>
+# include <iostream>
+# include "Client.hpp"
+
+void    treatMessage(std::string message, Client &sender, std::vector<Client> &clients);
+
+#endif
