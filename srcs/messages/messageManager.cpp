@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:29:36 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:45:57 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
                     executeQuit(message, clients);
                 else if (message.getCommand() == "JOIN")
                     executeJoin(message, clients, channels);
+                else if (message.getCommand() == "PART")
+                    executePart(message, clients, channels);
             }
         }
     }

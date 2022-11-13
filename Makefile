@@ -9,6 +9,7 @@ SRCS		=	main.cpp \
 					pass.cpp \
 					quit.cpp \
 					join.cpp \
+					part.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \

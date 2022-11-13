@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:45:55 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:43:11 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ class Channel
 
         Channel & operator=(const Channel & rhs);
 
-        bool        isMember(Client & client);
+        bool        isMember(Client & client) const;
         void        addMember(Client & client);
         void        removeMember(Client & client);
-        bool        isOperator(Client & client);
+        bool        isOperator(Client & client) const;
         void        addOperator(Client & client);
         void        removeOperator(Client & client);
         std::string getName() const;
         std::string getTopic() const;
         void        setTopic(std::string topic);
+
+        std::string getUserNameInChannel(Client & client) const;
 
         static bool isChannelNameValid(std::string name);
 

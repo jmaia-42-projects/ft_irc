@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 18:00:24 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:57:01 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ Channel & Channel::operator=(const Channel & rhs)
     return *this;
 }
 
-bool        Channel::isMember(Client & client)
+bool        Channel::isMember(Client & client) const
 {
-    for (std::vector<Client>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
+    for (size_t i = 0; i < _clients.size(); i++)
     {
-        if (it->getId() == client.getId())
+        if (_clients[i].getNickname() == client.getNickname())
             return true;
     }
     return false;
@@ -66,11 +66,7 @@ void        Channel::addMember(Client & client)
         sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
         std::string userList = "";
         for (std::vector<Client>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
-        {
-            if (this->isOperator(*it))
-                userList += "@";
-            userList += it->getNickname() + " ";
-        }
+            userList += this->getUserNameInChannel(*it) + (it == this->_clients.end() - 1 ? "" : " ");
         sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
         sendMessage(client, "366 " + client.getNickname() + " " + _name);
     }
@@ -81,16 +77,19 @@ void        Channel::removeMember(Client & client)
     {
         if (it->getId() == client.getId())
         {
+            sendMessages(_clients, ":" + it->getNickname() + " PART " + _name);
             this->_clients.erase(it);
+            if (this->isOperator(client))
+                this->removeOperator(client);
             return;
         }
     }
 }
-bool        Channel::isOperator(Client & client)
+bool        Channel::isOperator(Client & client) const
 {
-    for (std::vector<Client>::iterator it = this->_operators.begin(); it != this->_operators.end(); it++)
+    for (size_t i = 0; i < _operators.size(); i++)
     {
-        if (it->getId() == client.getId())
+        if (_operators[i].getNickname() == client.getNickname())
             return true;
     }
     return false;
@@ -136,4 +135,11 @@ bool Channel::isChannelNameValid(std::string name)
             return false;
     }
     return true;
+}
+
+std::string Channel::getUserNameInChannel(Client & client) const
+{
+    if (this->isOperator(client))
+        return "@" + client.getNickname();
+    return client.getNickname();
 }
