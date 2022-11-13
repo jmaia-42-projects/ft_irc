@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/12 18:36:34 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:57:51 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void    pollRoutine(int serverSocket);
 
 int	main(int ac, char **av)
 {
-	
 	int	err;
 	err = checkArgsValidity(ac, av);
 	if (err)

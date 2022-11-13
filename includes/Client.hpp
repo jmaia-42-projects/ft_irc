@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:17:14 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:58:04 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class Client
         void setRealname(std::string realname);
         std::string getRealname(void) const;
         void log(void);
-        bool isLogged(void) const; 
+        bool isLogged(void) const;
         void givePassword(void);
         bool hasGivedPassword(void) const;
 
