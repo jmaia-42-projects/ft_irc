@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:49:21 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:24:23 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/socket.h>
 # include "Client.hpp"
 # include "Message.hpp"
+# include "Channel.hpp"
 
 void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);

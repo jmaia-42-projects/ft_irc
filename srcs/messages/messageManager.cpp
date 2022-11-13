@@ -6,14 +6,15 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:49:28 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:24:51 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
 
-void executeMessage(Message &message, std::vector<Client> &clients)
+void executeMessage(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
+    (void)channels;
     if (message.getCommand() == "PASS")
         executePass(message, clients);
     else
@@ -33,7 +34,7 @@ void executeMessage(Message &message, std::vector<Client> &clients)
     }
 }
 
-void treatMessage(std::string message, Client &sender, std::vector<Client> &clients)
+void treatMessage(std::string message, Client &sender, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
     (void)clients;
 
@@ -49,7 +50,7 @@ void treatMessage(std::string message, Client &sender, std::vector<Client> &clie
         separator1 = separator2;
     }
     for (size_t i = 0; i < messages.size(); i++)
-        executeMessage(messages.at(i), clients);
+        executeMessage(messages.at(i), clients, channels);
 }
 
 void sendMessage(Client &receiver, std::string text)

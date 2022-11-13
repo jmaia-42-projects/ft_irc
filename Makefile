@@ -12,6 +12,7 @@ SRCS		=	main.cpp \
 				$(addprefix classes/, \
 					Client.cpp \
 					Message.cpp \
+					Channel.cpp \
 				) \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
