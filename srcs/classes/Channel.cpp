@@ -6,18 +6,25 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:22:16 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:00:24 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
+#include "messages.hpp"
 
-Channel::Channel(): _name(""), _topic("")
+Channel::Channel(): _name(""), _topic("Topic")
 {
 }
 
-Channel::Channel(std::string name): _name(name), _topic("")
+Channel::Channel(std::string name, Client &client): _name(name), _topic("Topic")
 {
+    _clients.push_back(client);
+    _operators.push_back(client);
+    sendMessage(client, ":" + client.getNickname() + " JOIN " + _name);
+    sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
+    sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :@" + client.getNickname());
+    sendMessage(client, "366 " + client.getNickname() + " " + _name);
 }
 
 Channel::Channel(const Channel & src)
@@ -53,7 +60,20 @@ bool        Channel::isMember(Client & client)
 void        Channel::addMember(Client & client)
 {
     if (!this->isMember(client))
+    {
         this->_clients.push_back(client);
+        sendMessages(_clients, ":" + client.getNickname() + " JOIN " + _name);
+        sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
+        std::string userList = "";
+        for (std::vector<Client>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
+        {
+            if (this->isOperator(*it))
+                userList += "@";
+            userList += it->getNickname() + " ";
+        }
+        sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
+        sendMessage(client, "366 " + client.getNickname() + " " + _name);
+    }
 }
 void        Channel::removeMember(Client & client)
 {
@@ -102,4 +122,18 @@ std::string Channel::getTopic() const
 void        Channel::setTopic(std::string topic)
 {
     this->_topic = topic;
+}
+
+bool Channel::isChannelNameValid(std::string name)
+{
+    if (name.length() < 2 || name.length() > 200)
+        return false;
+    if (name[0] != '#')
+        return false;
+    for (std::string::iterator it = name.begin() + 1; it != name.end(); it++)
+    {
+        if (*it == ' ' || *it == ',')
+            return false;
+    }
+    return true;
 }

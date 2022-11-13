@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:22:06 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:45:55 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 class Channel
 {
     public:
-        Channel(std::string name);
+        Channel(std::string name, Client &client);
         Channel(const Channel & src);
         ~Channel();
 
@@ -35,6 +35,8 @@ class Channel
         std::string getName() const;
         std::string getTopic() const;
         void        setTopic(std::string topic);
+
+        static bool isChannelNameValid(std::string name);
 
     private:
         Channel();
