@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:28:30 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 18:47:43 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:01:49 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ void    executePart(Message &message, std::vector<Client> &clients, std::vector<
 				if (channels.at(i).getName() == message.getParameters().at(0))
 				{
 					if (channels.at(i).isMember(message.getSender()))
-                        channels.at(i).removeMember(message.getSender());
+                    {
+                        if (message.getParameters().size() == 1)
+                            channels.at(i).removeMember(message.getSender());
+                        else
+                            channels.at(i).removeMember(message.getSender(), message.getParameters().at(1));
+                    }
                     else
                         sendMessage(message.getSender(), "442 " + message.getSender().getNickname() + " " + message.getParameters().at(0) + " :You're not on that channel");
                     return ;

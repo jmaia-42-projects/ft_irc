@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 18:57:01 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:00:47 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,23 @@ void        Channel::addMember(Client & client)
         sendMessage(client, "366 " + client.getNickname() + " " + _name);
     }
 }
-void        Channel::removeMember(Client & client)
+void        Channel::removeMember(Client & client, std::string reason)
 {
     for (std::vector<Client>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
     {
         if (it->getId() == client.getId())
         {
-            sendMessages(_clients, ":" + it->getNickname() + " PART " + _name);
+            sendMessages(_clients, ":" + it->getNickname() + " PART " + _name + (reason == "" ? "" : " :") + reason);
             this->_clients.erase(it);
             if (this->isOperator(client))
                 this->removeOperator(client);
             return;
         }
     }
+}
+void        Channel::removeMember(Client & client)
+{
+    this->removeMember(client, "");
 }
 bool        Channel::isOperator(Client & client) const
 {
