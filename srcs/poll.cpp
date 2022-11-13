@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:55:04 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:02:53 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void acceptConnection(int serverSocket, std::vector<Client> &clients)
 {
     struct sockaddr_in  clientAddress;
     socklen_t           clientAddressLength = sizeof(clientAddress);
-    
+
     int clientserverSocketFd = accept(serverSocket, (struct sockaddr *)&clientAddress, &clientAddressLength);
     if (clientserverSocketFd == -1)
     {
