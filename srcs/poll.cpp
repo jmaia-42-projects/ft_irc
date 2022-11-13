@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:53:51 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:55:04 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client>
 
 void acceptConnection(int serverSocket, std::vector<Client> &clients)
 {
-    struct sockaddr_in clientAddress;
-    socklen_t clientAddressLength = sizeof(clientAddress);
+    struct sockaddr_in  clientAddress;
+    socklen_t           clientAddressLength = sizeof(clientAddress);
+    
     int clientserverSocketFd = accept(serverSocket, (struct sockaddr *)&clientAddress, &clientAddressLength);
     if (clientserverSocketFd == -1)
     {
@@ -38,8 +39,8 @@ void acceptConnection(int serverSocket, std::vector<Client> &clients)
 std::string acceptMessage(Client &client)
 {
     std::string message;
-    char buffer[REVC_BUFFER];
-    int readed;
+    char        buffer[REVC_BUFFER];
+    int         readed;
 
     bzero(buffer, REVC_BUFFER);
     while ((readed = recv(client.getSocket(), buffer, REVC_BUFFER, MSG_DONTWAIT)) > 0)
