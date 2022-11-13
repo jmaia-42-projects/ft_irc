@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:46:42 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:29:04 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void executeMessage(Message &message, std::vector<Client> &clients)
         {
             if (message.getCommand() == "NICK")
                 executeNick(message, clients);
-            else if (message.getCommand() == "USER")
+            if (message.getCommand() == "USER")
                 executeUser(message, clients);
             if (message.getSender().isLogged())
             {
