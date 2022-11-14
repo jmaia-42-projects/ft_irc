@@ -3,18 +3,21 @@ NAME		=	ircserv
 SRCS		=	main.cpp \
 				poll.cpp \
 				$(addprefix messages/, \
+					$(addprefix numeric_replies/, \
+						errNeedMoreParams.cpp \
+					) \
 					messageManager.cpp \
 					nick.cpp \
 					user.cpp \
 					pass.cpp \
 					quit.cpp \
-					$(addprefix numeric_replies/, \
-						errNeedMoreParams.cpp \
-					) \
+					join.cpp \
+					part.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \
 					Message.cpp \
+					Channel.cpp \
 				) \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \

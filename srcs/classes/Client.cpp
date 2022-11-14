@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:29:03 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/14 15:38:54 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nic
 
 Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname("")
 {
-    _id = _globalId++;
-    _pollfd.fd = socket;
-    _pollfd.events = POLLIN | POLLOUT;
+	_id = _globalId++;
+	_pollfd.fd = socket;
+	_pollfd.events = POLLIN | POLLOUT;
 }
 
 Client::Client(Client const & src)
 {
-    *this = src;
+	*this = src;
 }
 
 Client::~Client(void)
@@ -39,71 +39,71 @@ Client::~Client(void)
 
 Client & Client::operator=(Client const & rhs)
 {
-    if (this != &rhs)
-    {
-        _id = rhs._id;
-        _socket = rhs._socket;
-        _pollfd = rhs._pollfd;
-        _nickname = rhs._nickname;
-        _logged = rhs._logged;
-        _username = rhs._username;
-        _realname = rhs._realname;
-        _givedPassword = rhs._givedPassword;
-    }
-    return *this;
+	if (this != &rhs)
+	{
+		_id = rhs._id;
+		_socket = rhs._socket;
+		_pollfd = rhs._pollfd;
+		_nickname = rhs._nickname;
+		_logged = rhs._logged;
+		_username = rhs._username;
+		_realname = rhs._realname;
+		_givedPassword = rhs._givedPassword;
+	}
+	return *this;
 }
 
 struct pollfd Client::getPollFd(void) const
 {
-    return _pollfd;
+	return _pollfd;
 }
 
 int Client::getSocket(void) const
 {
-    return _socket;
+	return _socket;
 }
 
 int Client::getId(void) const
 {
-    return _id;
+	return _id;
 }
 
 void Client::setNickname(std::string nickname)
 {
-    _nickname = nickname;
+	_nickname = nickname;
 }
 std::string Client::getNickname(void) const
 {
-    return _nickname;
+	return _nickname;
 }
 
 void Client::setUsername(std::string username)
 {
-    _username = username;
+	_username = username;
 }
 std::string Client::getUsername(void) const
 {
-    return _username;
+	return _username;
 }
 void Client::setRealname(std::string realname)
 {
-    _realname = realname;
+	_realname = realname;
 }
 std::string Client::getRealname(void) const
 {
-    return _realname;
+	return _realname;
 }
 void Client::log(void)
 {
-    _logged = true;
+	_logged = true;
 }
 bool Client::isLogged(void) const
 {
-    return _logged;
+	return _logged;
 }
 void Client::givePassword(void)
 {
-    _givedPassword = true;
+	_givedPassword = true;
 }
 bool Client::hasGivedPassword(void) const
 {
@@ -113,4 +113,9 @@ bool Client::hasGivedPassword(void) const
 void Client::receiveMessage(std::string message)
 {
 	sendMessage(*this, message);
+}
+
+std::string	Client::getIdentifier(void) const
+{
+	return _nickname + "!" + _username + "@localhost";
 }

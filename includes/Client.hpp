@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:24:24 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/14 15:38:27 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 
 class Client:	public MessageReceiver
 {
-    public:
-        Client(int socket);
-        Client(Client const & src);
-        ~Client(void);
+	public:
+		Client(int socket);
+		Client(Client const & src);
+		~Client(void);
 
-        Client & operator=(Client const & rhs);
+		Client & operator=(Client const & rhs);
 
-        struct pollfd getPollFd(void) const;
-        int getSocket(void) const;
-        int getId(void) const;
+		struct pollfd getPollFd(void) const;
+		int getSocket(void) const;
+		int getId(void) const;
 
         void setNickname(std::string nickname);
         std::string getNickname(void) const;
@@ -43,19 +43,21 @@ class Client:	public MessageReceiver
         bool hasGivedPassword(void) const;
 		void	receiveMessage(std::string message);
 
-    private:
-        Client(void);
+		std::string	getIdentifier(void) const;
 
-        static int      _globalId;
+	private:
+		Client(void);
 
-        int             _id;
-        int             _socket;
-        struct pollfd   _pollfd;
-        bool            _givedPassword;
-        std::string     _nickname;
-        bool            _logged;
-        std::string     _username;
-        std::string     _realname;
+		static int      _globalId;
+
+		int             _id;
+		int             _socket;
+		struct pollfd   _pollfd;
+		bool            _givedPassword;
+		std::string     _nickname;
+		bool            _logged;
+		std::string     _username;
+		std::string     _realname;
 };
 
 #endif

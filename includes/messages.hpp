@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:49:21 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:34:08 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/socket.h>
 # include "Client.hpp"
 # include "Message.hpp"
+# include "Channel.hpp"
 
 void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);
@@ -26,5 +27,7 @@ void    executeNick(Message &message, std::vector<Client> &clients);
 void    executeUser(Message &message, std::vector<Client> &clients);
 void    executePass(Message &message, std::vector<Client> &clients);
 void    executeQuit(Message &message, std::vector<Client> &clients);
+void    executeJoin(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
+void    executePart(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 
 #endif
