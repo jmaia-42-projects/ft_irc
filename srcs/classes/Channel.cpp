@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:58:08 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:04:04 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,9 @@ void    Channel::sendUserList(Client &client) const
 	}
 	sendMessage(client, "353 " + client.getIdentifier() + " = " + _name + " :" + userList);
 	sendMessage(client, "366 " + client.getIdentifier() + " " + _name + " :End of /NAMES list");
+}
+
+void Channel::receiveMessage(std::string message)
+{
+	sendMessages(_clients, message);
 }

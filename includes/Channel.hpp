@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:33:06 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:41:50 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <vector>
 # include <string>
-# include "Client.hpp"
 
-class Channel
+# include "Client.hpp"
+# include "MessageReceiver.hpp"
+
+class Channel:	public MessageReceiver
 {
 	public:
 		Channel(std::string name, Client &client);
@@ -37,6 +39,7 @@ class Channel
 		std::string getName() const;
 		std::string getTopic() const;
 		void        setTopic(std::string topic);
+		void		receiveMessage(std::string message);
 
 		static bool isChannelNameValid(std::string name);
 
