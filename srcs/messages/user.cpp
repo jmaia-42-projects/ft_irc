@@ -6,17 +6,18 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:29:33 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:29:46 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
+#include "numericReplies.hpp"
 
 void    executeUser(Message &message, std::vector<Client> &clients)
 {
 	(void)clients;
 	if (message.getParameters().size() < 4)
-		sendMessage(message.getSender(), "461 USER :Not enough parameters");
+		sendErrNeedMoreParams(message.getSender(), "USER");
 	else
 	{
 		if (message.getSender().isLogged())

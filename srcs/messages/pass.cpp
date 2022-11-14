@@ -6,17 +6,18 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:39:47 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:29:33 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
+#include "numericReplies.hpp"
 
 void    executePass(Message &message, std::vector<Client> &clients)
 {
 	(void)clients;
 	if (message.getParameters().size() < 1)
-		sendMessage(message.getSender(), "461 USER :Not enough parameters");
+		sendErrNeedMoreParams(message.getSender(), "PASS");
 	else
 	{
 		if (message.getSender().isLogged())

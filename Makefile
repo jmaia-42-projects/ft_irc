@@ -5,6 +5,7 @@ SRCS		=	main.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
 						errNeedMoreParams.cpp \
+						errNeedToBeInChannel.cpp \
 					) \
 					messageManager.cpp \
 					nick.cpp \

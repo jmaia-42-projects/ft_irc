@@ -6,17 +6,18 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 16:06:30 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:29:22 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:29:13 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
+#include "numericReplies.hpp"
 
 void    executeNick(Message &message, std::vector<Client> &clients)
 {
 	(void)clients;
 	if (message.getParameters().size() < 1)
-		sendMessage(message.getSender(), "431 NICK :Not enough parameters");
+		sendErrNeedMoreParams(message.getSender(), "NICK");
 	else
 	{
 		for (size_t i = 0; i < clients.size(); i++)

@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:27:13 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:36:44 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Channel::Channel(): _name(""), _topic("") {}
 
 Channel::Channel(std::string name, Client &client): _name(name), _topic("")
 {
-	_modes.insert(std::make_pair('l', 1));
+	_modes.insert(std::make_pair('l', 0));
 	_modes.insert(std::make_pair('i', 0));
 	_modes.insert(std::make_pair('t', 1));
 	this->addOperator(client);
