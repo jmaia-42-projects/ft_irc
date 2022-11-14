@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:30:28 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:58:08 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void        Channel::addMember(Client & client)
 	if (!this->isMember(client))
 	{
 		this->_clients.push_back(client);
-		sendMessages(_clients, ":" + client.getNickname() + " JOIN " + _name);
+		sendMessages(_clients, ":" + client.getIdentifier() + " JOIN " + _name);
 		this->sendTopic(client);
 		this->sendUserList(client);
 	}
@@ -59,7 +59,7 @@ void        Channel::removeMember(Client & client, std::string reason)
 	{
 		if (it->getId() == client.getId())
 		{
-			sendMessages(_clients, ":" + it->getNickname() + " PART " + _name + (reason == "" ? "" : " :") + reason);
+			sendMessages(_clients, ":" + it->getIdentifier() + " PART " + _name + (reason == "" ? "" : " :") + reason);
 			this->_clients.erase(it);
 			if (this->isOperator(client))
 				this->removeOperator(client);
@@ -116,7 +116,7 @@ void        Channel::setTopic(std::string topic) { this->_topic = topic; }
 void    Channel::sendTopic(Client &client) const
 {
 	if (_topic != "")
-		sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
+		sendMessage(client, "332 " + client.getIdentifier() + " " + _name + " :" + _topic);
 }
 
 void    Channel::sendUserList(Client &client) const
@@ -130,6 +130,6 @@ void    Channel::sendUserList(Client &client) const
 			userList += "@";
 		userList += _clients.at(i).getNickname();
 	}
-	sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
-	sendMessage(client, "366 " + client.getNickname() + " " + _name + " :End of /NAMES list");
+	sendMessage(client, "353 " + client.getIdentifier() + " = " + _name + " :" + userList);
+	sendMessage(client, "366 " + client.getIdentifier() + " " + _name + " :End of /NAMES list");
 }

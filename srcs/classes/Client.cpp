@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:33:18 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:57:17 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,9 @@ void Client::givePassword(void)
 bool Client::hasGivedPassword(void) const
 {
 	return _givedPassword;
+}
+
+std::string	Client::getIdentifier(void) const
+{
+	return _nickname + "!" + _username + "@localhost";
 }

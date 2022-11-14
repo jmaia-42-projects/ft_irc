@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 16:06:30 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:34:36 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:29:22 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void    executeNick(Message &message, std::vector<Client> &clients)
 		if (!message.getSender().isLogged() && message.getSender().getRealname() != "" && message.getSender().getUsername() != "")
 		{
 			message.getSender().log();
-			sendMessage(message.getSender(), "001 " + message.getSender().getNickname() + " :Welcome to the Internet Relay Network " + message.getSender().getNickname() + "!");
+			sendMessage(message.getSender(), "001 " + message.getSender().getNickname() + " :Welcome to the Internet Relay Network " + message.getSender().getIdentifier() + "!");
 		}
 	}
 }

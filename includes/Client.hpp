@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:33:22 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:51:49 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ class Client
 		bool isLogged(void) const;
 		void givePassword(void);
 		bool hasGivedPassword(void) const;
+
+		std::string	getIdentifier(void) const;
 
 	private:
 		Client(void);
