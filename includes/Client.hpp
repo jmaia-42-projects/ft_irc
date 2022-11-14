@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:58:04 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:24:24 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <poll.h>
 # include <string>
 
-class Client
+# include "MessageReceiver.hpp"
+
+class Client:	public MessageReceiver
 {
     public:
         Client(int socket);
@@ -39,6 +41,7 @@ class Client
         bool isLogged(void) const;
         void givePassword(void);
         bool hasGivedPassword(void) const;
+		void	receiveMessage(std::string message);
 
     private:
         Client(void);

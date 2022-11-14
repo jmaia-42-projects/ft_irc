@@ -6,12 +6,14 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:24:23 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:29:03 by jmaia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Client.hpp"
 #include <iostream>
+
+#include "Client.hpp"
+#include "messages.hpp"
 
 int     Client::_globalId = 0;
 
@@ -106,4 +108,9 @@ void Client::givePassword(void)
 bool Client::hasGivedPassword(void) const
 {
     return _givedPassword;
+}
+
+void Client::receiveMessage(std::string message)
+{
+	sendMessage(*this, message);
 }
