@@ -8,6 +8,9 @@ SRCS		=	main.cpp \
 					user.cpp \
 					pass.cpp \
 					quit.cpp \
+					$(addprefix numeric_replies/, \
+						errNeedMoreParams.cpp \
+					) \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \
