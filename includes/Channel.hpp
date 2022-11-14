@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:41:50 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:24:14 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CHANNEL_HPP
 
 # include <vector>
+# include <map>
 # include <string>
 
 # include "Client.hpp"
@@ -49,6 +50,7 @@ class Channel:	public MessageReceiver
 		std::vector<Client> _operators;
 		std::string _name;
 		std::string _topic;
+		std::map<char, unsigned int> _modes;
 
 		void    sendTopic(Client &client) const;
 		void    sendUserList(Client &client) const;
