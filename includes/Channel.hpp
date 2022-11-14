@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 19:02:12 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:51:06 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ class Channel
         void        removeMember(Client & client);
         void        removeMember(Client & client, std::string reason);
         bool        isOperator(Client & client) const;
+        bool        isOperator(const Client & client) const;
         void        addOperator(Client & client);
         void        removeOperator(Client & client);
         std::string getName() const;
         std::string getTopic() const;
         void        setTopic(std::string topic);
-
-        std::string getUserNameInChannel(Client & client) const;
 
         static bool isChannelNameValid(std::string name);
 
@@ -47,6 +46,9 @@ class Channel
         std::vector<Client> _operators;
         std::string _name;
         std::string _topic;
+
+        void    sendTopic(Client &client) const;
+        void    sendUserList(Client &client) const;
 
 };
 

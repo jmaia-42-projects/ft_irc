@@ -6,36 +6,22 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 19:00:47 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:54:52 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
 #include "messages.hpp"
 
-Channel::Channel(): _name(""), _topic("Topic")
-{
-}
+Channel::Channel(): _name(""), _topic("") {}
 
-Channel::Channel(std::string name, Client &client): _name(name), _topic("Topic")
+Channel::Channel(std::string name, Client &client): _name(name), _topic("")
 {
-    _clients.push_back(client);
-    _operators.push_back(client);
-    sendMessage(client, ":" + client.getNickname() + " JOIN " + _name);
-    sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
-    sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :@" + client.getNickname());
-    sendMessage(client, "366 " + client.getNickname() + " " + _name);
+    this->addOperator(client);
+    this->addMember(client);
 }
-
-Channel::Channel(const Channel & src)
-{
-    *this = src;
-}
-
-Channel::~Channel()
-{
-}
-
+Channel::Channel(const Channel & src) { *this = src; }
+Channel::~Channel() {}
 Channel & Channel::operator=(const Channel & rhs)
 {
     if (this != &rhs)
@@ -52,7 +38,7 @@ bool        Channel::isMember(Client & client) const
 {
     for (size_t i = 0; i < _clients.size(); i++)
     {
-        if (_clients[i].getNickname() == client.getNickname())
+        if (_clients[i].getId() == client.getId())
             return true;
     }
     return false;
@@ -63,12 +49,8 @@ void        Channel::addMember(Client & client)
     {
         this->_clients.push_back(client);
         sendMessages(_clients, ":" + client.getNickname() + " JOIN " + _name);
-        sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
-        std::string userList = "";
-        for (std::vector<Client>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
-            userList += this->getUserNameInChannel(*it) + (it == this->_clients.end() - 1 ? "" : " ");
-        sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
-        sendMessage(client, "366 " + client.getNickname() + " " + _name);
+        this->sendTopic(client);
+        this->sendUserList(client);
     }
 }
 void        Channel::removeMember(Client & client, std::string reason)
@@ -85,15 +67,14 @@ void        Channel::removeMember(Client & client, std::string reason)
         }
     }
 }
-void        Channel::removeMember(Client & client)
-{
-    this->removeMember(client, "");
-}
-bool        Channel::isOperator(Client & client) const
+void        Channel::removeMember(Client & client) { this->removeMember(client, ""); }
+
+bool        Channel::isOperator(Client & client) const { return this->isOperator((const Client &)client); }
+bool        Channel::isOperator(const Client & client) const
 {
     for (size_t i = 0; i < _operators.size(); i++)
     {
-        if (_operators[i].getNickname() == client.getNickname())
+        if (_operators[i].getId() == client.getId())
             return true;
     }
     return false;
@@ -114,19 +95,8 @@ void        Channel::removeOperator(Client & client)
         }
     }
 }
-std::string Channel::getName() const
-{
-    return this->_name;
-}
-std::string Channel::getTopic() const
-{
-    return this->_topic;
-}
-void        Channel::setTopic(std::string topic)
-{
-    this->_topic = topic;
-}
 
+std::string Channel::getName() const { return this->_name; }
 bool Channel::isChannelNameValid(std::string name)
 {
     if (name.length() < 2 || name.length() > 200)
@@ -141,9 +111,27 @@ bool Channel::isChannelNameValid(std::string name)
     return true;
 }
 
-std::string Channel::getUserNameInChannel(Client & client) const
+std::string Channel::getTopic() const { return this->_topic; }
+void        Channel::setTopic(std::string topic) { this->_topic = topic; }
+void    Channel::sendTopic(Client &client) const
 {
-    if (this->isOperator(client))
-        return "@" + client.getNickname();
-    return client.getNickname();
+    if (_topic == "")
+        sendMessage(client, "331 " + client.getNickname() + " " + _name + " :No topic is set");
+    else
+        sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
+}
+
+void    Channel::sendUserList(Client &client) const
+{
+    std::string userList = "";
+    for (size_t i = 0; i < _clients.size(); i++)
+    {
+        if (i != 0)
+            userList += " ";
+        if (this->isOperator(_clients.at(i)))
+            userList += "@";
+        userList += _clients.at(i).getNickname();
+    }
+    sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
+    sendMessage(client, "366 " + client.getNickname() + " " + _name);
 }
