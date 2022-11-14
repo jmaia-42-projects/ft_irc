@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:36:44 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:48:19 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,15 @@ bool Channel::isChannelNameValid(std::string name)
 }
 
 std::string Channel::getTopic() const { return this->_topic; }
-void        Channel::setTopic(std::string topic) { this->_topic = topic; }
+void        Channel::setTopic(std::string topic, Client &modifier) {
+	if (_modes['t'] == 1 && !isOperator(modifier))
+	{
+		sendMessage(modifier, "482 " + _name + " :You're not channel operator");
+		return ;
+	}
+	this->_topic = topic;
+	sendMessages(_clients, ":" + modifier.getIdentifier() + " TOPIC " + _name + " :" + topic);
+}
 void    Channel::sendTopic(Client &client) const
 {
 	if (_topic != "")

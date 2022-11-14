@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:34:08 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:43:23 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void    executePass(Message &message, std::vector<Client> &clients);
 void    executeQuit(Message &message, std::vector<Client> &clients);
 void    executeJoin(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executePart(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
+void    executeTopic(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 
 #endif

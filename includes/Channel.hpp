@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:24:14 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:44:12 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class Channel:	public MessageReceiver
 		void        removeOperator(Client & client);
 		std::string getName() const;
 		std::string getTopic() const;
-		void        setTopic(std::string topic);
+		void        setTopic(std::string topic, Client &modifier);
 		void		receiveMessage(std::string message);
 
 		static bool isChannelNameValid(std::string name);
