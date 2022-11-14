@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 11:54:52 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:50:01 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ std::string Channel::getTopic() const { return this->_topic; }
 void        Channel::setTopic(std::string topic) { this->_topic = topic; }
 void    Channel::sendTopic(Client &client) const
 {
-    if (_topic == "")
-        sendMessage(client, "331 " + client.getNickname() + " " + _name + " :No topic is set");
-    else
+    if (_topic != "")
         sendMessage(client, "332 " + client.getNickname() + " " + _name + " :" + _topic);
 }
 
@@ -133,5 +131,5 @@ void    Channel::sendUserList(Client &client) const
         userList += _clients.at(i).getNickname();
     }
     sendMessage(client, "353 " + client.getNickname() + " = " + _name + " :" + userList);
-    sendMessage(client, "366 " + client.getNickname() + " " + _name);
+    sendMessage(client, "366 " + client.getNickname() + " " + _name + " :End of /NAMES list");
 }
