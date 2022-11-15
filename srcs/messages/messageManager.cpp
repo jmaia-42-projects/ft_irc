@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 12:49:28 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:40:51 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void executeMessage(Message &message, std::vector<Client> &clients)
             {
                 if (message.getCommand() == "QUIT")
                     executeQuit(message, clients);
+				if (message.getCommand() == "PRIVMSG")
+					executePrivMsg(message, clients, channels);
             }
         }
     }

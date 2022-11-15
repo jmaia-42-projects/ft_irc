@@ -8,6 +8,7 @@ SRCS		=	main.cpp \
 					nick.cpp \
 					user.cpp \
 					pass.cpp \
+					privMsg.cpp \
 					quit.cpp \
 					$(addprefix numeric_replies/, \
 						errNeedMoreParams.cpp \
