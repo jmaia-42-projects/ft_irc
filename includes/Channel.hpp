@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 17:30:52 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:05:56 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Channel:	public MessageReceiver
 
 		static bool isChannelNameValid(std::string name);
 
-		void		receiveMessage(std::string message);
+		void		receiveMessage(std::string message, Client &sender);
 		std::string	getName(void);
 
 	private:

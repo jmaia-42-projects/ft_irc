@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:29:15 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:06:34 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ bool Client::hasGivedPassword(void) const
     return _givedPassword;
 }
 
-void Client::receiveMessage(std::string message)
+void Client::receiveMessage(std::string message, Client &client)
 {
+	(void) client;
 	sendMessage(*this, message);
 }
 
@@ -144,4 +145,9 @@ void	Client::disconnect(void)
 std::string	Client::getName(void)
 {
 	return (this->_nickname);
+}
+
+bool	Client::operator==(Client const &obj)
+{
+	return (obj._nickname == this->_nickname);
 }
