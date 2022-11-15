@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:26:54 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:58:34 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 #include "messages.hpp"
 #include "colors.hpp"
 
-Channel::Channel(): _name(""), _topic("") {}
-
-Channel::Channel(std::string name, Client &client): _name(name), _topic("")
+Channel::Channel(std::string name, Client &client, std::vector<Client> &clients): _global_clients(clients), _name(name), _topic("")
 {
 	std::cout << PURPLE << "Created channel " << _name << RESET << std::endl;
 	_modes.insert(std::make_pair('l', 0));
@@ -25,7 +23,7 @@ Channel::Channel(std::string name, Client &client): _name(name), _topic("")
 	this->addOperator(&client);
 	this->addMember(&client);
 }
-Channel::Channel(const Channel & src) { *this = src; }
+Channel::Channel(const Channel & src): _global_clients(src._global_clients) { *this = src; }
 Channel::~Channel() {}
 Channel & Channel::operator=(const Channel & rhs)
 {
@@ -44,7 +42,7 @@ bool        Channel::isMember(Client & client) const
 {
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
-		if (_clients[i]->getId() == client.getId())
+		if (_clients[i] == client.getNickname())
 			return true;
 	}
 	return false;
@@ -53,7 +51,7 @@ bool        Channel::isMember(Client & client) const
 void	Channel::sendMessageToAll(std::string msg) const
 {
 	for (size_t i = 0; i < _clients.size(); i++)
-		sendMessage(*_clients[i], msg);
+		sendMessage(*getClientByNickname(_clients.at(i)), msg);
 }
 
 void        Channel::addMember(Client *client)
@@ -65,16 +63,7 @@ void        Channel::addMember(Client *client)
 			sendMessage(*client, "471 " + client->getNickname() + " " + _name + " :Cannot join channel (+l)");
 			return ;
 		}
-		for(size_t i = 0; i < _clients.size(); i++)
-		{
-			std::cout << "Client " << _clients[i]->getNickname() << " (with id: " << _clients[i]->getId() << ") in channel " << _name << std::endl;
-		}
-		_clients.push_back(client);
-		std::cout << "Added client " << client->getNickname() << " to channel " << _name << RESET << std::endl;
-		for(size_t i = 0; i < _clients.size(); i++)
-		{
-			std::cout << "Client " << _clients[i]->getNickname() << " (with id: " << _clients[i]->getId() << ") in channel " << _name << std::endl;
-		}
+		_clients.push_back(client->getNickname());
 		sendMessageToAll(":" + client->getIdentifier() + " JOIN " + _name);
 		this->sendTopic(*client);
 		this->sendUserList(*client);
@@ -82,12 +71,11 @@ void        Channel::addMember(Client *client)
 }
 void        Channel::removeMember(Client & client, std::string reason)
 {
-	std::cout << "Removing member " << client.getNickname() << " from channel " << _name << std::endl;
-	for (std::vector<Client *>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
+	for (std::vector<std::string>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
 	{
-		if ((*it)->getId() == client.getId())
+		if (*it == client.getNickname())
 		{
-			sendMessageToAll(":" + (*it)->getIdentifier() + " PART " + _name + (reason == "" ? "" : " :") + reason);
+			sendMessageToAll(":" + getClientByNickname(*it)->getIdentifier() + " PART " + _name + (reason == "" ? "" : " :") + reason);
 			this->_clients.erase(it);
 			if (this->isOperator(client))
 				this->removeOperator(client);
@@ -102,22 +90,21 @@ bool        Channel::isOperator(const Client & client) const
 {
 	for (size_t i = 0; i < _operators.size(); i++)
 	{
-		if (_operators[i]->getId() == client.getId())
+		if (_operators[i] == client.getNickname())
 			return true;
 	}
 	return false;
 }
 void        Channel::addOperator(Client *client)
 {
-	std::cout << "add operator " << client->getNickname() << std::endl;
 	if (!this->isOperator(*client))
-		this->_operators.push_back(client);
+		this->_operators.push_back(client->getNickname());
 }
 void        Channel::removeOperator(Client & client)
 {
-	for (std::vector<Client *>::iterator it = this->_operators.begin(); it != this->_operators.end(); it++)
+	for (std::vector<std::string>::iterator it = this->_operators.begin(); it != this->_operators.end(); it++)
 	{
-		if ((*it)->getId() == client.getId())
+		if (*it == client.getNickname())
 		{
 			this->_operators.erase(it);
 			return;
@@ -163,9 +150,9 @@ void    Channel::sendUserList(Client &client) const
 	{
 		if (i != 0)
 			userList += " ";
-		if (this->isOperator(*(_clients.at(i))))
+		if (this->isOperator(*getClientByNickname(_clients.at(i))))
 			userList += "@";
-		userList += _clients.at(i)->getNickname();
+		userList += _clients.at(i);
 	}
 	sendMessage(client, "353 " + client.getIdentifier() + " = " + _name + " :" + userList);
 	sendMessage(client, "366 " + client.getIdentifier() + " " + _name + " :End of /NAMES list");
@@ -178,7 +165,7 @@ void Channel::receiveMessage(std::string message)
 
 void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 {
-	if (!modeModificator.activate())
+	if (!modeModificator.activate() && modeModificator.getMode() != 'o')
 		_modes[modeModificator.getMode()] = 0;
 	else
 	{
@@ -193,12 +180,12 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 		{
 			for (size_t i = 0; i < _clients.size(); i++)
 			{
-				if (_clients[i]->getNickname() == modeModificator.getParameter())
+				if (_clients[i] == modeModificator.getParameter())
 				{
 					if (modeModificator.activate())
-						this->addOperator(_clients[i]);
+						this->addOperator(getClientByNickname(_clients.at(i)));
 					else
-						this->removeOperator(*_clients[i]);
+						this->removeOperator(*getClientByNickname(_clients.at(i)));
 				}
 			}
 		}
@@ -209,4 +196,15 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 std::string	Channel::getName(void)
 {
 	return (this->_name);
+}
+
+
+Client*	Channel::getClientByNickname(std::string nickName) const
+{
+	for (size_t i = 0; i < _global_clients.size(); i++)
+	{
+		if (_global_clients[i].getNickname() == nickName)
+			return (&(_global_clients[i]));
+	}
+	return (NULL);
 }

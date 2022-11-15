@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:08:26 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:30:52 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 class Channel:	public MessageReceiver
 {
 	public:
-		Channel(std::string name, Client &client);
+		Channel(std::string name, Client &client, std::vector<Client> &clients);
 		Channel(const Channel & src);
 		~Channel();
 
@@ -49,9 +49,11 @@ class Channel:	public MessageReceiver
 		std::string	getName(void);
 
 	private:
+		std::vector<Client> &_global_clients;
+
 		Channel();
-		std::vector<Client *> _clients;
-		std::vector<Client *> _operators;
+		std::vector<std::string> _clients;
+		std::vector<std::string> _operators;
 		std::string _name;
 		std::string _topic;
 		std::map<char, unsigned int> _modes;
@@ -60,6 +62,7 @@ class Channel:	public MessageReceiver
 		void    sendUserList(Client &client) const;
 		void	sendMessageToAll(std::string msg) const;
 
+		Client*	getClientByNickname(std::string nickName) const;
 };
 
 #endif
