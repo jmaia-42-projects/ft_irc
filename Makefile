@@ -2,6 +2,7 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
+				PrivMsg.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
 						errNeedMoreParams.cpp \
@@ -11,6 +12,7 @@ SRCS		=	main.cpp \
 					nick.cpp \
 					user.cpp \
 					pass.cpp \
+					privMsg.cpp \
 					quit.cpp \
 					join.cpp \
 					part.cpp \

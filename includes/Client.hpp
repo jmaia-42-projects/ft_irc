@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:31:19 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:57:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ class Client:	public MessageReceiver
         bool isLogged(void) const;
         void givePassword(void);
         bool hasGivedPassword(void) const;
-		void	receiveMessage(std::string message);
 		std::string	getRecvBuffer(void) const;
 		void	setRecvBuffer(std::string buffer);
 		std::string	getIdentifier(void) const;
 		bool	isDisconnected(void) const;
 		void	disconnect(void);
+
+		void receiveMessage(std::string message);
+		std::string getName(void);
 
 	private:
 		Client(void);

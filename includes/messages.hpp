@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 14:16:24 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:06:31 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <sys/socket.h>
 # include "Client.hpp"
+# include "Channel.hpp"
 # include "Message.hpp"
 # include "Channel.hpp"
 
@@ -31,5 +32,6 @@ void    executeJoin(Message &message, std::vector<Client> &clients, std::vector<
 void    executePart(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeTopic(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeMode(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
+void    executePrivMsg(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 
 #endif

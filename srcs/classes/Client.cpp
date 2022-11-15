@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:29:45 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:29:15 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ Client & Client::operator=(Client const & rhs)
 {
 	if (this != &rhs)
 	{
-		_id = rhs._id;
-		_socket = rhs._socket;
-		_pollfd = rhs._pollfd;
-		_nickname = rhs._nickname;
-		_logged = rhs._logged;
-		_username = rhs._username;
-		_realname = rhs._realname;
-		_givedPassword = rhs._givedPassword;
-		_recvBuffer = rhs._recvBuffer;
-		_disconnected = rhs._disconnected;
+		_id = rhs.getId();
+		_socket = rhs.getSocket();
+		_pollfd = rhs.getPollFd();
+		_nickname = rhs.getNickname();
+		_logged = rhs.isLogged();
+		_username = rhs.getUsername();
+		_realname = rhs.getRealname();
+		_givedPassword = rhs.hasGivedPassword();
+		_recvBuffer = rhs.getRecvBuffer();
+		_disconnected = rhs.isDisconnected();
 	}
 	return *this;
 }
@@ -139,4 +139,9 @@ bool	Client::isDisconnected(void) const
 void	Client::disconnect(void)
 {
 	_disconnected = true;
+}
+
+std::string	Client::getName(void)
+{
+	return (this->_nickname);
 }

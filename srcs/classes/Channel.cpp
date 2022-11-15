@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:00:32 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:26:54 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,16 @@ void        Channel::addMember(Client *client)
 			sendMessage(*client, "471 " + client->getNickname() + " " + _name + " :Cannot join channel (+l)");
 			return ;
 		}
-		this->_clients.push_back(client);
+		for(size_t i = 0; i < _clients.size(); i++)
+		{
+			std::cout << "Client " << _clients[i]->getNickname() << " (with id: " << _clients[i]->getId() << ") in channel " << _name << std::endl;
+		}
+		_clients.push_back(client);
+		std::cout << "Added client " << client->getNickname() << " to channel " << _name << RESET << std::endl;
+		for(size_t i = 0; i < _clients.size(); i++)
+		{
+			std::cout << "Client " << _clients[i]->getNickname() << " (with id: " << _clients[i]->getId() << ") in channel " << _name << std::endl;
+		}
 		sendMessageToAll(":" + client->getIdentifier() + " JOIN " + _name);
 		this->sendTopic(*client);
 		this->sendUserList(*client);
@@ -73,6 +82,7 @@ void        Channel::addMember(Client *client)
 }
 void        Channel::removeMember(Client & client, std::string reason)
 {
+	std::cout << "Removing member " << client.getNickname() << " from channel " << _name << std::endl;
 	for (std::vector<Client *>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
 	{
 		if ((*it)->getId() == client.getId())
@@ -99,6 +109,7 @@ bool        Channel::isOperator(const Client & client) const
 }
 void        Channel::addOperator(Client *client)
 {
+	std::cout << "add operator " << client->getNickname() << std::endl;
 	if (!this->isOperator(*client))
 		this->_operators.push_back(client);
 }
@@ -182,7 +193,7 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 		{
 			for (size_t i = 0; i < _clients.size(); i++)
 			{
-				if (_clients[i]->getId() == modifier.getId())
+				if (_clients[i]->getNickname() == modeModificator.getParameter())
 				{
 					if (modeModificator.activate())
 						this->addOperator(_clients[i]);
@@ -193,4 +204,9 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 		}
 	}
 	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
+}
+
+std::string	Channel::getName(void)
+{
+	return (this->_name);
 }
