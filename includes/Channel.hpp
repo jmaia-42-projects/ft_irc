@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:00:22 by jmaia            ###   ###               */
+/*   Updated: 2022/11/15 16:05:23 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class Channel:	public MessageReceiver
 		void        setTopic(std::string topic, Client &modifier);
 		static bool isChannelNameValid(std::string name);
 
-		void		receiveMessage(std::string message);
+		void		receiveMessage(std::string message, Client &sender);
 		std::string	getName(void);
 
 	private:

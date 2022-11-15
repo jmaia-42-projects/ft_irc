@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 15:57:10 by jmaia            ###   ###               */
+/*   Updated: 2022/11/15 16:26:12 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ class Client:	public MessageReceiver
 		bool	isDisconnected(void) const;
 		void	disconnect(void);
 
-		void receiveMessage(std::string message);
+		void receiveMessage(std::string message, Client &sender);
 		std::string getName(void);
+
+		bool	operator==(Client const &obj);
 
 	private:
 		Client(void);
