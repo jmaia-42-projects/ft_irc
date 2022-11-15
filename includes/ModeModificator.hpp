@@ -6,13 +6,16 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:18:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 14:39:17 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:56:31 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
-#include <vector>
-#include "Client.hpp"
+#ifndef MODEMODIFICATOR_HPP
+# define MODEMODIFICATOR_HPP
+
+# include <string>
+# include <vector>
+# include "Client.hpp"
 
 class ModeModificatior
 {
@@ -34,3 +37,5 @@ class ModeModificatior
 		bool        _function;
 		std::string _param;
 };
+
+#endif

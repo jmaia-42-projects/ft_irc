@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 15:35:32 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:00:32 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,4 +163,34 @@ void    Channel::sendUserList(Client &client) const
 void Channel::receiveMessage(std::string message)
 {
 	sendMessageToAll(message);
+}
+
+void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
+{
+	if (!modeModificator.activate())
+		_modes[modeModificator.getMode()] = 0;
+	else
+	{
+		if (modeModificator.getMode() != 'o')
+		{
+			if (modeModificator.getParameter() != "")
+				_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
+			else
+				_modes[modeModificator.getMode()] = 1;
+		}
+		else
+		{
+			for (size_t i = 0; i < _clients.size(); i++)
+			{
+				if (_clients[i]->getId() == modifier.getId())
+				{
+					if (modeModificator.activate())
+						this->addOperator(_clients[i]);
+					else
+						this->removeOperator(*_clients[i]);
+				}
+			}
+		}
+	}
+	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
 }
