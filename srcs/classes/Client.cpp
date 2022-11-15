@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:29:45 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:58:01 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,9 @@ bool	Client::isDisconnected(void) const
 void	Client::disconnect(void)
 {
 	_disconnected = true;
+}
+
+std::string	Client::getName(void)
+{
+	return (this->_nickname);
 }
