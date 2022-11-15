@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:38:54 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:29:45 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname("")
+Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
 {
 }
 
-Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname("")
+Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
 {
 	_id = _globalId++;
 	_pollfd.fd = socket;
@@ -49,6 +49,8 @@ Client & Client::operator=(Client const & rhs)
 		_username = rhs._username;
 		_realname = rhs._realname;
 		_givedPassword = rhs._givedPassword;
+		_recvBuffer = rhs._recvBuffer;
+		_disconnected = rhs._disconnected;
 	}
 	return *this;
 }
@@ -118,4 +120,23 @@ void Client::receiveMessage(std::string message)
 std::string	Client::getIdentifier(void) const
 {
 	return _nickname + "!" + _username + "@localhost";
+}
+
+std::string Client::getRecvBuffer(void) const
+{
+	return _recvBuffer;
+}
+
+void Client::setRecvBuffer(std::string buffer)
+{
+	_recvBuffer = buffer;
+}
+
+bool	Client::isDisconnected(void) const
+{
+	return _disconnected;
+}
+void	Client::disconnect(void)
+{
+	_disconnected = true;
 }

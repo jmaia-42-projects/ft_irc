@@ -6,11 +6,12 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:47:44 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:39:55 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
+#include "colors.hpp"
 
 void executeMessage(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
@@ -41,26 +42,21 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 
 void treatMessage(std::string message, Client &sender, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
-	(void)clients;
-
-	std::vector<Message> messages;
-	std::string::iterator separator1 = std::find(message.begin(), message.end(), '\n');
-	messages.push_back(Message(sender, std::string(message.begin(), separator1)));
-	while (separator1 != message.end())
+	std::string text = sender.getRecvBuffer() + message;
+	size_t pos;
+	while ((pos = text.find("\r\n")) != std::string::npos)
 	{
-		std::string::iterator separator2 = std::find(separator1 + 1, message.end(), '\n');
-		if (separator2 == separator1 + 1)
-			break;
-		messages.push_back(Message(sender, std::string(separator1 + 1, separator2)));
-		separator1 = separator2;
+		std::string line = text.substr(0, pos);
+		text = text.substr(pos + 2);
+		Message message(sender, line);
+		executeMessage(message, clients, channels);
 	}
-	for (size_t i = 0; i < messages.size(); i++)
-		executeMessage(messages.at(i), clients, channels);
+	sender.setRecvBuffer(text);
 }
 
 void sendMessage(Client &receiver, std::string text)
 {
-	std::cout << "Sending message to client " << receiver.getId() << ": " << text << std::endl;
+	std::cout << YELLOW << "> " << receiver.getId() << " | " << text << RESET << std::endl;
 	text += "\n";
 	send(receiver.getSocket(), text.c_str(), text.size(), 0);
 }

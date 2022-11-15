@@ -6,11 +6,12 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:23:46 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:40:45 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "poll.hpp"
+#include "colors.hpp"
 
 void exportPollSet(struct pollfd *pollSet, int serverSocket, std::vector<Client> &clients)
 {
@@ -32,7 +33,7 @@ void acceptConnection(int serverSocket, std::vector<Client> &clients)
 		return;
 	}
 	Client client(clientserverSocketFd);
-	std::cout << "New connection: Client " << client.getId() << std::endl;
+	std::cout << GREEN << "New client with id: " << client.getId() << RESET << std::endl;
 	clients.push_back(client);
 }
 
@@ -43,16 +44,13 @@ std::string acceptMessage(Client &client)
 	int         readed;
 
 	bzero(buffer, REVC_BUFFER);
-	while ((readed = recv(client.getSocket(), buffer, REVC_BUFFER, MSG_DONTWAIT)) > 0)
+	readed = recv(client.getSocket(), buffer, REVC_BUFFER, MSG_DONTWAIT);
+	if (readed == -1)
 	{
-		if (readed == -1)
-		{
-			std::cout << "Error: recv failed: " << strerror(errno) << std::endl;
-			break;
-		}
-		message.append(buffer, readed);
-		bzero(buffer, REVC_BUFFER);
+		std::cout << "Error: recv failed: " << strerror(errno) << std::endl;
+		return message;
 	}
+	message.append(buffer, readed);
 	return message;
 }
 
@@ -60,14 +58,10 @@ void	reveiveMessage(Client &client, std::vector<Client> &clients, int j, std::ve
 {
 	std::string message = acceptMessage(client);
 	if (message.length() > 0)
-	{
-		std::cout << "------ New message received from client " << client.getId() << " ------" << std::endl
-				  << message << std::endl;
 		treatMessage(message, client, clients, channels);
-	}
 	else
 	{
-		std::cout << "Client " << client.getId() << " disconnected" << std::endl;
+		std::cout << RED << "Client " << client.getId() << " disconnected" << RESET << std::endl;
 		clients.erase(clients.begin() + j);
 	}
 }
@@ -84,7 +78,13 @@ void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &
 			{
 				if (clients.at(j).getSocket() == pollSet.fd)
 				{
-					reveiveMessage(clients.at(j), clients, j, channels);
+					if (clients.at(j).isDisconnected())
+					{
+						std::cout << RED << "Client " << clients.at(j).getId() << " disconnected" << RESET << std::endl;
+						clients.erase(clients.begin() + j);
+					}
+					else
+						reveiveMessage(clients.at(j), clients, j, channels);
 					break;
 				}
 			}

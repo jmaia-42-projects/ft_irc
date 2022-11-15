@@ -6,16 +6,16 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 14:35:01 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:34:25 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:40:21 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Message.hpp"
+#include "colors.hpp"
 
 Message::Message(Client &sender, std::string originalMessage): _sender(sender), _originalMessage(originalMessage)
 {
-	if (_originalMessage[_originalMessage.size() - 1] == '\r')
-		_originalMessage.erase(_originalMessage.size() - 1);
+	std::cout << CYAN << "< " << sender.getId() << " | " << originalMessage << RESET << std::endl;
 	std::string::iterator separator1 = std::find(_originalMessage.begin(), _originalMessage.end(), ' ');
 	_command = std::string(_originalMessage.begin(), separator1);
 	while (separator1 != _originalMessage.end())
