@@ -2,6 +2,7 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
+				PrivMsg.cpp \
 				$(addprefix messages/, \
 					messageManager.cpp \
 					nick.cpp \

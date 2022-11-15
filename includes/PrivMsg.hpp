@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:46:03 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/15 11:10:48 by jmaia            ###   ###               */
+/*   Updated: 2022/11/15 14:34:29 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,28 @@
 # include <vector>
 
 # include "Message.hpp"
+# include "Optionnal.hpp"
 
 class	PrivMsg
 {
 	private:
-		std::vector<string>	_targets;
-		std::string			_message;
+		std::vector<std::string>	_targets;
+		std::string					_message;
 
 		PrivMsg(void);
+
+		static PrivMsg	parseMessage(Message &message);
 	public:
-		PrivMsg(Message &message);
 		~PrivMsg(void);
 		PrivMsg(const PrivMsg &obj);
 		PrivMsg	&operator=(const PrivMsg &obj);
 
-		std::vector<string>	getTargets(void);
-		std::string			getText(void);
-}
+		static Optionnal<PrivMsg>	construct(Message &msg);
+
+		std::vector<std::string>	&getTargets(void);
+		std::string					&getText(void);
+
+	friend class Optionnal<PrivMsg>;
+};
 
 #endif
