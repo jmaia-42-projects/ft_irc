@@ -1,0 +1,12 @@
+Comment ça va se passer ?
+
+Faut qu'on init tout le bordel pour recevoir des connexions
+=> Ça renvoie un fd, ça a besoin du port
+
+
+
+Ensuite on entre dans notre giga boucle
+On appelle poll() pour savoir qu'est-ce qu'il y a à lire/écrire
+
+Si le fd de notre serveur peut lire des trucs, bah c'est parti on init
+Si n'importe quel fd peut lire des trucs => on traite la demande

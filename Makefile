@@ -2,11 +2,13 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
+				PrivMsg.cpp \
 				$(addprefix messages/, \
 					messageManager.cpp \
 					nick.cpp \
 					user.cpp \
 					pass.cpp \
+					privMsg.cpp \
 					quit.cpp \
 					$(addprefix numeric_replies/, \
 						errNeedMoreParams.cpp \
@@ -27,9 +29,13 @@ _OBJS		=	${SRCS:.cpp=.o}
 OBJS		=	$(addprefix build/, $(_OBJS))
 OBJS_DEPEND	=	${OBJS:.o=.d}
 
+INCLUDE		=	-I includes/
+
 CXX			=	c++
 CXXFLAGS	=   -Wall -Wextra -Werror -std=c++98
-INCLUDE		=	-I includes/
+
+#CXX			=	bash gfilt
+CXXFLAGS	+=	-fdiagnostics-color=always 
 
 all		:	$(NAME)
 
