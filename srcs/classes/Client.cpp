@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:29:03 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:26:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,9 @@ bool Client::hasGivedPassword(void) const
 void Client::receiveMessage(std::string message)
 {
 	sendMessage(*this, message);
+}
+
+std::string	Client::getName(void)
+{
+	return (this->_nickname);
 }
