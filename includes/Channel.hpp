@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:44:12 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:33:01 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ class Channel:	public MessageReceiver
 		Channel & operator=(const Channel & rhs);
 
 		bool        isMember(Client & client) const;
-		void        addMember(Client & client);
+		void        addMember(Client *client);
 		void        removeMember(Client & client);
 		void        removeMember(Client & client, std::string reason);
 		bool        isOperator(Client & client) const;
 		bool        isOperator(const Client & client) const;
-		void        addOperator(Client & client);
+		void        addOperator(Client *client);
 		void        removeOperator(Client & client);
 		std::string getName() const;
 		std::string getTopic() const;
@@ -46,14 +46,15 @@ class Channel:	public MessageReceiver
 
 	private:
 		Channel();
-		std::vector<Client> _clients;
-		std::vector<Client> _operators;
+		std::vector<Client *> _clients;
+		std::vector<Client *> _operators;
 		std::string _name;
 		std::string _topic;
 		std::map<char, unsigned int> _modes;
 
 		void    sendTopic(Client &client) const;
 		void    sendUserList(Client &client) const;
+		void	sendMessageToAll(std::string msg) const;
 
 };
 
