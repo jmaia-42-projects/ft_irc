@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:39:55 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:56:47 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 					executePart(message, clients, channels);
 				else if (message.getCommand() == "TOPIC")
 					executeTopic(message, clients, channels);
+				else if (message.getCommand() == "MODE")
+					executeMode(message, clients, channels);
 			}
 		}
 	}

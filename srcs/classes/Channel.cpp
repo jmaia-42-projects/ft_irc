@@ -6,17 +6,19 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:48:19 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:14:35 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
 #include "messages.hpp"
+#include "colors.hpp"
 
 Channel::Channel(): _name(""), _topic("") {}
 
 Channel::Channel(std::string name, Client &client): _name(name), _topic("")
 {
+	std::cout << PURPLE << "Created channel " << _name << RESET << std::endl;
 	_modes.insert(std::make_pair('l', 0));
 	_modes.insert(std::make_pair('i', 0));
 	_modes.insert(std::make_pair('t', 1));

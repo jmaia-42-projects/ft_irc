@@ -15,11 +15,13 @@ SRCS		=	main.cpp \
 					join.cpp \
 					part.cpp \
 					topic.cpp \
+					mode.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \
 					Message.cpp \
 					Channel.cpp \
+					ModeModificator.cpp \
 				) \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
