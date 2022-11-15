@@ -6,12 +6,12 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:00:03 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/14 18:35:18 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:09:03 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NUMERICAL_REPLIES_HPP
-# define NUMERICAL_REPLIES_HPP
+#ifndef NUMERIC_REPLIES_HPP
+# define NUMERIC_REPLIES_HPP
 
 # include <string>
 

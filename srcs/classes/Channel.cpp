@@ -6,13 +6,14 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 18:07:47 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:13:48 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
 #include "messages.hpp"
 #include "colors.hpp"
+#include "numericReplies.hpp"
 
 Channel::Channel(std::string name, Client &client, std::vector<Client> &clients): _global_clients(clients), _name(name), _topic("")
 {
@@ -160,6 +161,11 @@ void    Channel::sendUserList(Client &client) const
 
 void Channel::receiveMessage(std::string message, Client &client)
 {
+	if (isBanned(client))
+		return ;
+	std::vector<Channel> tmpChannels; // TODO
+	if (testInChannelAndSendError(client, this->_name, tmpChannels))
+		return ;
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
 		if (_clients[i] != client.getNickname())
@@ -195,6 +201,13 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 		}
 	}
 	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
+}
+
+//TODO
+bool	Channel::isBanned(Client &client)
+{
+	(void) client;
+	return (false);
 }
 
 std::string	Channel::getName(void)
