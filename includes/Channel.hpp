@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:04:59 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:23:12 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ class Channel:	public MessageReceiver
 		std::string	getName(void);
 		bool		isBanned(Client &client);
 		void		invite(Client &client, Client &inviter);
+		void		kick(Client &client, Client &kicker, std::string reason);
 
 	private:
 		std::vector<Client> &_global_clients;

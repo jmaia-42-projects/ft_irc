@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:05:28 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:24:53 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,4 +269,19 @@ void		Channel::invite(Client &client, Client &inviter)
 	_invited.push_back(client.getNickname());
 	sendMessage(inviter, "341 " + inviter.getIdentifier() + " " + client.getNickname() + " " + _name);
 	sendMessage(client, ":" + inviter.getIdentifier() + " INVITE " + client.getNickname() + " " + _name);
+}
+
+void		Channel::kick(Client &client, Client &kicker, std::string reason)
+{
+	for (std::vector<std::string>::iterator it = this->_clients.begin(); it != this->_clients.end(); it++)
+	{
+		if (*it == client.getNickname())
+		{
+			sendMessageToAll(":" + kicker.getIdentifier() + " KICK " + _name + " " + client.getNickname() + " :" + reason);
+			this->_clients.erase(it);
+			if (this->isOperator(client))
+				this->removeOperator(client);
+			return;
+		}
+	}
 }
