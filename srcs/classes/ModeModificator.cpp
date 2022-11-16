@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:23:46 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 15:04:18 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:55:02 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,16 @@ static int isModeNeedAnArgument(char mode, bool function)
 		case 't':
 			return 0;
 			break;
+		case 'm':
+			return 0;
+			break;
 		case 'l':
 			return function ? 1 : 0;
 			break;
 		case 'o':
+			return 1;
+			break;
+		case 'b':
 			return 1;
 			break;
 		
