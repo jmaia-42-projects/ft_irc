@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 13:35:16 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 14:41:22 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ void        Channel::addMember(Client *client)
 		{
 			sendMessage(*client, "471 " + client->getNickname() + " " + _name + " :Cannot join channel (+l)");
 			return ;
+		}
+		if (_modes['i'] > 0 && !isOperator(*client))
+		{
+			bool found = false;
+			for (size_t i = 0; i < _invited.size(); i++)
+			{
+				if (_invited.at(i) == client->getNickname())
+					found = true;
+			}
+			if (!found)
+			{
+				sendMessage(*client, "473 " + client->getNickname() + " " + _name + " :Cannot join channel (+i)");
+				return ;
+			}
 		}
 		_clients.push_back(client->getNickname());
 		sendMessageToAll(":" + client->getIdentifier() + " JOIN " + _name);
@@ -170,30 +184,32 @@ void Channel::receiveMessage(std::string message, Client &client)
 
 void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 {
-	if (!modeModificator.activate() && modeModificator.getMode() != 'o')
+	if (modeModificator.getMode() == 'o')
+	{
+		for (size_t i = 0; i < _clients.size(); i++)
+		{
+			if (_clients[i] == modeModificator.getParameter())
+			{
+				if (modeModificator.activate())
+					this->addOperator(getClientByNickname(_clients.at(i)));
+				else
+					this->removeOperator(*getClientByNickname(_clients.at(i)));
+			}
+		}
+	}
+	else if (!modeModificator.activate())
 		_modes[modeModificator.getMode()] = 0;
 	else
 	{
-		if (modeModificator.getMode() != 'o')
+		if (modeModificator.getMode() == 'l')
 		{
-			if (modeModificator.getParameter() != "")
+			if (atoi(modeModificator.getParameter().c_str()) > 0)
 				_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
 			else
-				_modes[modeModificator.getMode()] = 1;
+				return ;
 		}
 		else
-		{
-			for (size_t i = 0; i < _clients.size(); i++)
-			{
-				if (_clients[i] == modeModificator.getParameter())
-				{
-					if (modeModificator.activate())
-						this->addOperator(getClientByNickname(_clients.at(i)));
-					else
-						this->removeOperator(*getClientByNickname(_clients.at(i)));
-				}
-			}
-		}
+			_modes[modeModificator.getMode()] = 1;
 	}
 	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
 }
@@ -212,4 +228,11 @@ Client*	Channel::getClientByNickname(std::string nickName) const
 			return (&(_global_clients[i]));
 	}
 	return (NULL);
+}
+
+void		Channel::invite(Client &client, Client &inviter)
+{
+	_invited.push_back(client.getNickname());
+	sendMessage(inviter, "341 " + inviter.getIdentifier() + " " + client.getNickname() + " " + _name);
+	sendMessage(client, ":" + inviter.getIdentifier() + " INVITE " + client.getNickname() + " " + _name);
 }
