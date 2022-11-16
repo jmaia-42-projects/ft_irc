@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:46:03 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/15 14:34:29 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 18:20:30 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 
 # include "Message.hpp"
 # include "Optionnal.hpp"
+
+typedef enum
+{
+	ERR_NEEDMOREPARAMS,
+	SUCCESS
+}	PrivMsgStatus;
 
 class	PrivMsg
 {

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 14:09:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/15 16:21:42 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 17:27:17 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	executePrivMsg(Message &message, std::vector<Client> &clients, std::vector<
 	if (message.getParameters().size() < 2)
 		sendErrNeedMoreParams(message.getSender(), message.getCommand());
 	if (!optPrivMsg.isValid())
-		return ; // Need to do things here
+		return ;
 	targets = getTargets(optPrivMsg.getObj(), clients, channels);
 	for (std::vector<MessageReceiver *>::iterator it = targets.begin(); it != targets.end(); it++)
 		sendPrivMsg(*it, message.getSender(), message.getOriginalMessage());

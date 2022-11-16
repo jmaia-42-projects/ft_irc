@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:55:03 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/15 14:30:26 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 18:22:17 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 #include "PrivMsg.hpp"
 
-static bool isMessageValid(Message &msg);
 static bool areTargetsValid(std::string targets);
+static PrivMsgStatus getMessageValidity(Message &msg);
 static std::vector<std::string>	split(std::string msg, char delim);
 
 PrivMsg::PrivMsg(void) {}
@@ -38,18 +38,20 @@ Optionnal<PrivMsg>	PrivMsg::construct(Message &msg)
 {
 	PrivMsg	privMsg;
 
-	if (!isMessageValid(msg))
+	if (getMessageValidity(msg) != SUCCESS)
 		return (Optionnal<PrivMsg>(NULL));
 	privMsg = parseMessage(msg);
 	return (Optionnal<PrivMsg>(&privMsg));
 }
 
-static bool isMessageValid(Message &msg)
+static PrivMsgStatus getMessageValidity(Message &msg)
 {
 	std::vector<std::string> params;
 
 	params = msg.getParameters();
-	return (params.size() == 2 && areTargetsValid(params[0]));
+	if (params.size() != 2)
+		return (ERR_NEEDMOREPARAMS);
+	return (SUCCESS);
 }
 
 static bool areTargetsValid(std::string targets)
