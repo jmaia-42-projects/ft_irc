@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:25:59 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:37:25 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,4 +240,11 @@ Client*	Channel::getClientByNickname(std::string nickName) const
 			return (&(_global_clients[i]));
 	}
 	return (NULL);
+}
+
+void		Channel::invite(Client &client, Client &inviter)
+{
+	_invited.push_back(client.getNickname());
+	sendMessage(inviter, "341 " + inviter.getIdentifier() + " " + client.getNickname() + " " + _name);
+	sendMessage(client, ":" + inviter.getIdentifier() + " INVITE " + client.getNickname() + " " + _name);
 }

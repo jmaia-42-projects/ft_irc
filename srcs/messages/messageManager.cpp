@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:08:00 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:38:18 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 					executeMode(message, clients, channels);
 				else if (message.getCommand() == "PRIVMSG")
 					executePrivMsg(message, clients, channels);
+				else if (message.getCommand() == "INVITE")
+					executeInvite(message, clients, channels);
 			}
 		}
 	}
