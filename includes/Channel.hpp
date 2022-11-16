@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:47:36 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:32:28 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ class Channel:	public MessageReceiver
 
 		void		receiveMessage(std::string message, Client &sender);
 		std::string	getName(void);
-		bool		isBanned(Client &client);
 		void		invite(Client &client, Client &inviter);
 		void		kick(Client &client, Client &kicker, std::string reason);
 		bool		isEmpty() const;
+		bool canClientSendMessage(Client &client);
+		bool		isBanned(Client &client);
+		bool		hasMode(char c);
+		bool		hasUserMode(Client &client, char c);
 
 	private:
 		std::vector<Client> &_global_clients;
