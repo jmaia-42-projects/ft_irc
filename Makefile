@@ -8,6 +8,7 @@ SRCS		=	main.cpp \
 						errCannotSendToChan.cpp \
 						errNeedMoreParams.cpp \
 						errNeedToBeInChannel.cpp \
+						errNotAnOperator.cpp \
 					) \
 					messageManager.cpp \
 					nick.cpp \
@@ -24,6 +25,7 @@ SRCS		=	main.cpp \
 					ping.cpp \
 					motd.cpp \
 					oper.cpp \
+					kill.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \

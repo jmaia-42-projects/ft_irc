@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 17:13:30 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:15:29 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 					executeMotd(message);
 				else if (message.getCommand() == "OPER")
 					executeOper(message, clients);
+				else if (message.getCommand() == "KILL")
+					executeKill(message, clients);
 			}
 		}
 	}
