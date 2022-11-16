@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:49:49 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:34:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,8 @@ void    Channel::sendUserList(Client &client) const
 
 void Channel::receiveMessage(std::string message, Client &client)
 {
-	if (isBanned(client))
-		return ;
+	if (!this->canClientSendMessage(client))
+		sendErrCannotSendToChan(client, this->_name);
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
 		if (_clients[i] != client.getNickname())
@@ -289,4 +289,25 @@ void		Channel::kick(Client &client, Client &kicker, std::string reason)
 bool		Channel::isEmpty() const
 {
 	return (_clients.size() == 0);
+}
+
+bool Channel::canClientSendMessage(Client &client)
+{
+	if (this->isBanned(client))
+		return (false);
+	if (this->hasMode('m') && !(this->isOperator(client) || this->hasUserMode(client, 'v')))
+		return (false);
+	return (true);
+}
+
+bool Channel::hasMode(char c)
+{
+	return (_mode[c] > 0);
+}
+
+bool Channel::hasUserMode(Client &client, char c) // TODO
+{
+	(void) client;
+	(void) c;
+	return (false);
 }

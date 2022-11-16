@@ -41,7 +41,7 @@ _OBJS		=	${SRCS:.cpp=.o}
 OBJS		=	$(addprefix build/, $(_OBJS))
 OBJS_DEPEND	=	${OBJS:.o=.d}
 
-CXX			=	c++
+CXX			=	clang++
 CXXFLAGS	=   -Wall -Wextra -Werror -std=c++98
 INCLUDE		=	-I includes/
 
