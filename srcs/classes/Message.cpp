@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 14:35:01 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:40:21 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:13:24 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ Message::Message(Client &sender, std::string originalMessage): _sender(sender), 
 	std::cout << CYAN << "< " << sender.getId() << " | " << originalMessage << RESET << std::endl;
 	std::string::iterator separator1 = std::find(_originalMessage.begin(), _originalMessage.end(), ' ');
 	_command = std::string(_originalMessage.begin(), separator1);
+	std::transform(_command.begin(), _command.end(),_command.begin(), ::toupper);
 	while (separator1 != _originalMessage.end())
 	{
 		std::string::iterator separator2 = std::find(separator1 + 1, _originalMessage.end(), ' ');
