@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:59:31 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:12:15 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void    executePrivMsg(Message &message, std::vector<Client> &clients, std::vect
 void    executeInvite(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeKick(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executePing(Message &message, std::vector<Client> &clients);
+void    executeMotd(Message &message);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:29:46 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:14:32 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void    executeUser(Message &message, std::vector<Client> &clients)
 			{
 				message.getSender().log();
 				sendMessage(message.getSender(), "001 " + message.getSender().getNickname() + " :Welcome to the Internet Relay Network " + message.getSender().getIdentifier() + "!");
+				executeMotd(message);
 			}
 		}
 	}
