@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:17:18 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:22:52 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,13 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 		_modes[modeModificator.getMode()] = 0;
 	else
 	{
-		if (modeModificator.getParameter() != "")
-			_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
+		if (modeModificator.getMode() == 'l')
+		{
+			if (atoi(modeModificator.getParameter().c_str()) > 0)
+				_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
+			else
+				return ;
+		}
 		else
 			_modes[modeModificator.getMode()] = 1;
 	}

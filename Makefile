@@ -37,7 +37,7 @@ OBJS		=	$(addprefix build/, $(_OBJS))
 OBJS_DEPEND	=	${OBJS:.o=.d}
 
 CXX			=	c++
-CXXFLAGS	=   -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
+CXXFLAGS	=   -Wall -Wextra -Werror -std=c++98
 INCLUDE		=	-I includes/
 
 all		:	$(NAME)
