@@ -5,6 +5,7 @@ SRCS		=	main.cpp \
 				PrivMsg.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
+						errCannotSendToChan.cpp \
 						errNeedMoreParams.cpp \
 						errNeedToBeInChannel.cpp \
 					) \
