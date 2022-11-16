@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 18:06:34 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:29:37 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
+Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false), _operator(false)
 {
 }
 
-Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
+Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false), _operator(false)
 {
 	_id = _globalId++;
 	_pollfd.fd = socket;
@@ -51,6 +51,7 @@ Client & Client::operator=(Client const & rhs)
 		_givedPassword = rhs.hasGivedPassword();
 		_recvBuffer = rhs.getRecvBuffer();
 		_disconnected = rhs.isDisconnected();
+		_operator = rhs.isOperator();
 	}
 	return *this;
 }
@@ -150,4 +151,13 @@ std::string	Client::getName(void)
 bool	Client::operator==(Client const &obj)
 {
 	return (obj._nickname == this->_nickname);
+}
+
+bool	Client::isOperator(void) const
+{
+	return (_operator);
+}
+void	Client::setOperator(void)
+{
+	_operator = true;
 }

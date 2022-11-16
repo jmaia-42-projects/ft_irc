@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:13:04 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:32:06 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 					executeKick(message, clients, channels);
 				else if (message.getCommand() == "motd" || message.getCommand() == "MOTD")
 					executeMotd(message);
+				else if (message.getCommand() == "OPER")
+					executeOper(message, clients);
 			}
 		}
 	}
