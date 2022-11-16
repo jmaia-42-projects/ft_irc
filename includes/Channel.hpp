@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:35:10 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:50:53 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ class Channel:	public MessageReceiver
 		std::vector<std::string> _clients;
 		std::vector<std::string> _operators;
 		std::vector<std::string> _invited;
+		std::vector<std::string> _banned;
 		std::string _name;
 		std::string _topic;
 		std::map<char, unsigned int> _modes;

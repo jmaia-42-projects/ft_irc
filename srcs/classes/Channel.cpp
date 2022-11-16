@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:37:25 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:01:10 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Channel::Channel(std::string name, Client &client, std::vector<Client> &clients)
 	_modes.insert(std::make_pair('l', 0));
 	_modes.insert(std::make_pair('i', 0));
 	_modes.insert(std::make_pair('t', 1));
+	_modes.insert(std::make_pair('m', 0));
 	this->addOperator(&client);
 	this->addMember(&client);
 }
@@ -77,6 +78,11 @@ void        Channel::addMember(Client *client)
 				sendMessage(*client, "473 " + client->getNickname() + " " + _name + " :Cannot join channel (+i)");
 				return ;
 			}
+		}
+		if (isBanned(*client))
+		{
+			sendMessage(*client, "474 " + client->getNickname() + " " + _name + " :Cannot join channel (+b)");
+			return ;
 		}
 		_clients.push_back(client->getNickname());
 		sendMessageToAll(":" + client->getIdentifier() + " JOIN " + _name);
@@ -177,9 +183,6 @@ void Channel::receiveMessage(std::string message, Client &client)
 {
 	if (isBanned(client))
 		return ;
-	std::vector<Channel> tmpChannels; // TODO
-	if (testInChannelAndSendError(client, this->_name, tmpChannels))
-		return ;
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
 		if (_clients[i] != client.getNickname())
@@ -189,7 +192,23 @@ void Channel::receiveMessage(std::string message, Client &client)
 
 void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 {
-	if (modeModificator.getMode() == 'o')
+	if (modeModificator.getMode() == 'b')
+	{
+		if (modeModificator.activate())
+			_banned.push_back(modeModificator.getParameter());
+		else
+		{
+			for (size_t i = 0; i < _banned.size(); i++)
+			{
+				if (_banned[i] == modeModificator.getParameter())
+				{
+					_banned.erase(_banned.begin() + i);
+					break ;
+				}
+			}
+		}
+	}
+	else if (modeModificator.getMode() == 'o')
 	{
 		for (size_t i = 0; i < _clients.size(); i++)
 		{
@@ -219,11 +238,14 @@ void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
 }
 
-//TODO
 bool	Channel::isBanned(Client &client)
 {
-	(void) client;
-	return (false);
+	for (size_t i = 0; i < _banned.size(); i++)
+	{
+		if (_banned[i] == client.getNickname())
+			return true;
+	}
+	return false;
 }
 
 std::string	Channel::getName(void)
