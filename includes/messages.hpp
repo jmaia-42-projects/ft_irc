@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 17:15:22 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:42:17 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void    executePing(Message &message, std::vector<Client> &clients);
 void    executeMotd(Message &message);
 void    executeOper(Message &message, std::vector<Client> &clients);
 void    executeKill(Message &message, std::vector<Client> &clients);
+void    executeRestart(Message &message);
 
 #endif

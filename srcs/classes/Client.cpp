@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:13:39 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:45:30 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ Client::Client(Client const & src)
 
 Client::~Client(void)
 {
+}
+
+void Client::resetGlobalId(void)
+{
+	_globalId = 0;
 }
 
 Client & Client::operator=(Client const & rhs)

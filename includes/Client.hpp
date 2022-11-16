@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:04:08 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:45:13 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ class Client:	public MessageReceiver
 
 		void receiveMessage(std::string message, Client &sender);
 		std::string getName(void);
+
+		static	void resetGlobalId(void);
 
 		bool	operator==(Client const &obj);
 

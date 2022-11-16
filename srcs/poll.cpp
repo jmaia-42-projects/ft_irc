@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:13:35 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:45:43 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,41 @@ void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &
 	}
 }
 
+int gStatus = 0;
+
 void pollRoutine(int serverSocket)
 {
 	std::vector<Client> clients;
 	std::vector<Channel> channels;
 	size_t inPoll;
 
-	while (1)
+	gStatus = 1;
+	while (gStatus != 0)
 	{
-		inPoll = clients.size() + 1;
-		struct pollfd pollSet[inPoll];
-		exportPollSet(pollSet, serverSocket, clients);
-		poll(pollSet, inPoll, -1);
-		for (size_t i = 0; i < inPoll; i++)
-			treatPollFd(pollSet[i], serverSocket, clients, channels);
+		std::cout << PURPLE << "Server ready !" << RESET << std::endl;
+		while (gStatus == 1)
+		{
+			inPoll = clients.size() + 1;
+			struct pollfd pollSet[inPoll];
+			exportPollSet(pollSet, serverSocket, clients);
+			poll(pollSet, inPoll, -1);
+			for (size_t i = 0; i < inPoll; i++)
+				treatPollFd(pollSet[i], serverSocket, clients, channels);
+		}
+		if(gStatus == 2)
+		{
+			std::cout << PURPLE << "Server is restarting..." << RESET << std::endl;
+			gStatus = 1;
+		}
+		for (size_t i = 0; i < clients.size(); i++)
+		{
+			close(clients.at(i).getSocket());
+			std::cout << RED << "Client " << clients.at(i).getId() << " disconnected" << RESET << std::endl;
+		}
+		clients.clear();
+		channels.clear();
+		Client::resetGlobalId();
 	}
+	std::cout << PURPLE << "Server stopped" << RESET << std::endl;
+	close(serverSocket);
 }

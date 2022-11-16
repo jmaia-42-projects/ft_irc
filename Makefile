@@ -26,6 +26,7 @@ SRCS		=	main.cpp \
 					motd.cpp \
 					oper.cpp \
 					kill.cpp \
+					restart.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \
