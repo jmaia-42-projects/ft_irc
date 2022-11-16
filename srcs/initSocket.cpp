@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initSocket.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:54:34 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/13 13:51:24 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/16 18:16:07 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ int	initSocket(unsigned short port)
 	int					err;
 	int					fd;
 	struct sockaddr_in6	addr;
+	int					unused = 1;
 
 	fd = socket(AF_INET6, SOCK_STREAM, 0);
 	if (fd == -1)
 		return (-1);
+	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &unused, sizeof(int));
 	addr = getAddr(port);
 	err = bind(fd, (const sockaddr *)&addr, sizeof(addr));
 	if (err == -1)

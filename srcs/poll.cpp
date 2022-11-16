@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:40:45 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:13:35 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,13 @@ std::string acceptMessage(Client &client)
 	return message;
 }
 
-void	reveiveMessage(Client &client, std::vector<Client> &clients, int j, std::vector<Channel> &channels)
+void	reveiveMessage(Client &client, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
 	std::string message = acceptMessage(client);
 	if (message.length() > 0)
 		treatMessage(message, client, clients, channels);
 	else
-	{
-		std::cout << RED << "Client " << client.getId() << " disconnected" << RESET << std::endl;
-		clients.erase(clients.begin() + j);
-	}
+		client.disconnect(clients);
 }
 
 void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &clients, std::vector<Channel> &channels)
@@ -78,14 +75,8 @@ void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &
 			{
 				if (clients.at(j).getSocket() == pollSet.fd)
 				{
-					if (clients.at(j).isDisconnected())
-					{
-						std::cout << RED << "Client " << clients.at(j).getId() << " disconnected" << RESET << std::endl;
-						clients.erase(clients.begin() + j);
-					}
-					else
-						reveiveMessage(clients.at(j), clients, j, channels);
-					break;
+					reveiveMessage(clients.at(j), clients, channels);
+					return ;
 				}
 			}
 		}
