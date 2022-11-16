@@ -21,6 +21,7 @@ SRCS		=	main.cpp \
 					mode.cpp \
 					invite.cpp \
 					kick.cpp \
+					ping.cpp \
 				) \
 				$(addprefix classes/, \
 					Client.cpp \
