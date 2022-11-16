@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:24:53 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:49:49 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,4 +284,9 @@ void		Channel::kick(Client &client, Client &kicker, std::string reason)
 			return;
 		}
 	}
+}
+
+bool		Channel::isEmpty() const
+{
+	return (_clients.size() == 0);
 }
