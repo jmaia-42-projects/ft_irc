@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:22:52 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:25:59 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ void        Channel::addMember(Client *client)
 		{
 			sendMessage(*client, "471 " + client->getNickname() + " " + _name + " :Cannot join channel (+l)");
 			return ;
+		}
+		if (_modes['i'] > 0 && !isOperator(*client))
+		{
+			bool found = false;
+			for (size_t i = 0; i < _invited.size(); i++)
+			{
+				if (_invited.at(i) == client->getNickname())
+					found = true;
+			}
+			if (!found)
+			{
+				sendMessage(*client, "473 " + client->getNickname() + " " + _name + " :Cannot join channel (+i)");
+				return ;
+			}
 		}
 		_clients.push_back(client->getNickname());
 		sendMessageToAll(":" + client->getIdentifier() + " JOIN " + _name);
