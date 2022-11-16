@@ -6,22 +6,24 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 18:06:34 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:13:39 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <unistd.h>
 
 #include "Client.hpp"
 #include "messages.hpp"
+#include "colors.hpp"
 
 int     Client::_globalId = 0;
 
-Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
+Client::Client(void): _id(_globalId++), _socket(-1), _givedPassword(false), _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _operator(false)
 {
 }
 
-Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _disconnected(false)
+Client::Client(int socket): _socket(socket), _givedPassword(false),  _nickname(""), _logged(false), _username(""), _realname(""), _recvBuffer(""), _operator(false)
 {
 	_id = _globalId++;
 	_pollfd.fd = socket;
@@ -50,7 +52,7 @@ Client & Client::operator=(Client const & rhs)
 		_realname = rhs.getRealname();
 		_givedPassword = rhs.hasGivedPassword();
 		_recvBuffer = rhs.getRecvBuffer();
-		_disconnected = rhs.isDisconnected();
+		_operator = rhs.isOperator();
 	}
 	return *this;
 }
@@ -133,13 +135,20 @@ void Client::setRecvBuffer(std::string buffer)
 	_recvBuffer = buffer;
 }
 
-bool	Client::isDisconnected(void) const
+
+void	Client::disconnect(std::vector<Client> &clients)
 {
-	return _disconnected;
-}
-void	Client::disconnect(void)
-{
-	_disconnected = true;
+	std::cout << RED << "Client " << _id << " disconnected" << RESET << std::endl;
+	if(close(_socket) < 0)
+		std::cout << "Error during socket closing" << std::endl;
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+	{
+		if (it->getId() == _id)
+		{
+			clients.erase(it);
+			break;
+		}
+	}
 }
 
 std::string	Client::getName(void)
@@ -150,4 +159,13 @@ std::string	Client::getName(void)
 bool	Client::operator==(Client const &obj)
 {
 	return (obj._nickname == this->_nickname);
+}
+
+bool	Client::isOperator(void) const
+{
+	return (_operator);
+}
+void	Client::setOperator(void)
+{
+	_operator = true;
 }

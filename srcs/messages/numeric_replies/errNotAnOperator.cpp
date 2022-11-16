@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.cpp                                           :+:      :+:    :+:   */
+/*   errNotAnOperator.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 17:39:16 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:06:47 by dhubleur         ###   ########.fr       */
+/*   Created: 2022/11/16 14:35:06 by jmaia             #+#    #+#             */
+/*   Updated: 2022/11/16 17:17:33 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
+#include "numericReplies.hpp"
 
-void    executeQuit(Message &message, std::vector<Client> &clients)
+void	sendErrNotAnOperator(Client &sender)
 {
-	message.getSender().disconnect(clients);
-	if (message.getParameters().size() < 1)
-		sendMessages(clients, ":" + message.getSender().getNickname() + " QUIT");
-	else
-	{
-		sendMessages(clients, ":" + message.getSender().getIdentifier() + " QUIT :" + message.getParameters().at(0));
-	}
+	sendMessage(sender, "481 " + sender.getIdentifier() + " :Permission Denied- You're not an IRC operator");
 }

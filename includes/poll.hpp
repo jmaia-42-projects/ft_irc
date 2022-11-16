@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:50:19 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/14 14:34:20 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:58:34 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <errno.h>
 # include <string.h>
+# include <unistd.h>
 # include <poll.h>
 # include <stddef.h>
 # include <sys/types.h>

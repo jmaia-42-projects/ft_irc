@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:26:12 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 18:04:08 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <poll.h>
 # include <string>
+# include <vector>
 
 # include "MessageReceiver.hpp"
 
@@ -44,8 +45,9 @@ class Client:	public MessageReceiver
 		std::string	getRecvBuffer(void) const;
 		void	setRecvBuffer(std::string buffer);
 		std::string	getIdentifier(void) const;
-		bool	isDisconnected(void) const;
-		void	disconnect(void);
+		void	disconnect(std::vector<Client> &clients);
+		bool	isOperator(void) const;
+		void	setOperator(void);
 
 		void receiveMessage(std::string message, Client &sender);
 		std::string getName(void);
@@ -66,7 +68,7 @@ class Client:	public MessageReceiver
 		std::string     _username;
 		std::string     _realname;
 		std::string		_recvBuffer;
-		bool			_disconnected;
+		bool			_operator;
 };
 
 #endif
