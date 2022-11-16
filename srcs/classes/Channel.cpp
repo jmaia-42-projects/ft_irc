@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:32:53 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 16:34:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,10 +300,9 @@ bool Channel::canClientSendMessage(Client &client)
 	return (true);
 }
 
-bool Channel::hasMode(char c) // TODO
+bool Channel::hasMode(char c)
 {
-	(void) c;
-	return (false);
+	return (_mode[c] > 0);
 }
 
 bool Channel::hasUserMode(Client &client, char c) // TODO
