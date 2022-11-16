@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 18:13:48 by jmaia            ###   ###               */
+/*   Updated: 2022/11/16 14:17:18 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,30 +175,27 @@ void Channel::receiveMessage(std::string message, Client &client)
 
 void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 {
-	if (!modeModificator.activate() && modeModificator.getMode() != 'o')
+	if (modeModificator.getMode() == 'o')
+	{
+		for (size_t i = 0; i < _clients.size(); i++)
+		{
+			if (_clients[i] == modeModificator.getParameter())
+			{
+				if (modeModificator.activate())
+					this->addOperator(getClientByNickname(_clients.at(i)));
+				else
+					this->removeOperator(*getClientByNickname(_clients.at(i)));
+			}
+		}
+	}
+	else if (!modeModificator.activate())
 		_modes[modeModificator.getMode()] = 0;
 	else
 	{
-		if (modeModificator.getMode() != 'o')
-		{
-			if (modeModificator.getParameter() != "")
-				_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
-			else
-				_modes[modeModificator.getMode()] = 1;
-		}
+		if (modeModificator.getParameter() != "")
+			_modes[modeModificator.getMode()] = atoi(modeModificator.getParameter().c_str());
 		else
-		{
-			for (size_t i = 0; i < _clients.size(); i++)
-			{
-				if (_clients[i] == modeModificator.getParameter())
-				{
-					if (modeModificator.activate())
-						this->addOperator(getClientByNickname(_clients.at(i)));
-					else
-						this->removeOperator(*getClientByNickname(_clients.at(i)));
-				}
-			}
-		}
+			_modes[modeModificator.getMode()] = 1;
 	}
 	sendMessageToAll(":" + modifier.getIdentifier() + " MODE " + _name + " " + (modeModificator.activate() ? "+" : "-") + modeModificator.getMode() + (modeModificator.getParameter() == "" ? "" : " " + modeModificator.getParameter()));
 }

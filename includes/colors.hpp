@@ -6,12 +6,12 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:38:13 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/15 13:38:44 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:17:54 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_HPP
-# define COLOR_HPP
+# define COLORS_HPP
 
 # define RED "\e[0;31m"
 # define GREEN "\e[0;32m"
