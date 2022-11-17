@@ -73,4 +73,7 @@ fclean	:	clean
 
 re		:	fclean ${NAME}
 
-.PHONY	:	all clean fclean re
+bonus	:	all
+	make -C bot
+
+.PHONY	:	all clean fclean re bonus
