@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 13:37:52 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 13:51:40 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:06:46 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,43 @@ void    sendMessage(int socket, std::string msg)
     send(socket, msg.c_str(), msg.length(), 0);
 }
 
+void    receivePrivateMessage(std::string from, std::string msg, int socket)
+{
+    std::cout << "Private message from " << from << ": " << msg << std::endl;
+    if(msg == "!ping")
+        sendMessage(socket, "PRIVMSG " + from + " :pong");
+}
+
 void    treatMessage(std::string msg, int socket)
 {
-    std::cout << msg << std::endl;
+    if (msg[0] == ':')
+        msg = msg.substr(1);
+    std::vector<std::string> args;
+    std::string::iterator separator1 = msg.begin() - 1;
+	while (separator1 != msg.end())
+	{
+		std::string::iterator separator2 = std::find(separator1 + 1, msg.end(), ' ');
+		std::string::iterator finalSeparator = std::find(separator1 + 1, msg.end(), ':');
+		if (finalSeparator < separator2)
+		{
+			args.push_back(std::string(finalSeparator + 1, msg.end()));
+			break;
+		}
+		args.push_back(std::string(separator1 + 1, separator2));
+		separator1 = separator2;
+	}
+    if (args[0] == "ERROR")
+    {
+        close(socket);
+        exit(1);
+    }
+    if (args.size() >= 4 && args[1] == "PRIVMSG")
+        receivePrivateMessage(args[0], args[3], socket);
 }
 
 void    startRoutine(int socket)
 {
+    std::cout << "Bot started!" << std::endl;
     std::string msg;
     while(1)
     {
