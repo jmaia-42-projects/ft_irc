@@ -2,6 +2,7 @@ NAME		=	ircbot
 
 SRCS		=	main.cpp \
 				convert.cpp \
+				messages.cpp \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
 					parseArgs.cpp \
