@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:18:26 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:30:15 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,10 @@ void    Channel::sendUserList(Client &client) const
 void Channel::receiveMessage(std::string message, Client &client)
 {
 	if (!this->canClientSendMessage(client))
+	{
 		sendErrCannotSendToChan(client, this->_name);
+		return ;
+	}
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
 		if (_clients[i] != client.getNickname())
@@ -192,7 +195,23 @@ void Channel::receiveMessage(std::string message, Client &client)
 
 void	Channel::changeMode(ModeModificatior &modeModificator, Client &modifier)
 {
-	if (modeModificator.getMode() == 'b')
+	if (modeModificator.getMode() == 'v')
+	{
+		if (modeModificator.activate())
+			_voiceAuthrized.push_back(modeModificator.getParameter());
+		else
+		{
+			for (size_t i = 0; i < _voiceAuthrized.size(); i++)
+			{
+				if (_voiceAuthrized[i] == modeModificator.getParameter())
+				{
+					_voiceAuthrized.erase(_voiceAuthrized.begin() + i);
+					break ;
+				}
+			}
+		}
+	}
+	else if (modeModificator.getMode() == 'b')
 	{
 		if (modeModificator.activate())
 			_banned.push_back(modeModificator.getParameter());
@@ -307,7 +326,13 @@ bool Channel::hasMode(char c)
 
 bool Channel::hasUserMode(Client &client, char c) // TODO
 {
-	(void) client;
-	(void) c;
-	return (false);
+	if (c == 'v')
+	{
+		for (size_t i = 0; i < _voiceAuthrized.size(); i++)
+		{
+			if (_voiceAuthrized[i] == client.getNickname())
+				return true;
+		}
+	}
+	return false;
 }
