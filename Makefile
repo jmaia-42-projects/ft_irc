@@ -3,6 +3,8 @@ NAME		=	ircserv
 SRCS		=	main.cpp \
 				poll.cpp \
 				signal.cpp \
+				convert.cpp \
+				initSocket.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
 						errCannotSendToChan.cpp \
@@ -38,9 +40,7 @@ SRCS		=	main.cpp \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
 					parseArgs.cpp \
-				) \
-				convert.cpp \
-				initSocket.cpp
+				)
 
 _OBJS		=	${SRCS:.cpp=.o}
 OBJS		=	$(addprefix build/, $(_OBJS))
