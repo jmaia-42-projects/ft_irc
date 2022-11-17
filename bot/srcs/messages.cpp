@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 13:37:52 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:08:32 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:45:37 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void    treatMessage(std::string msg, int socket)
 	}
     if (args[0] == "001")
         std::cout << "Bot started!" << std::endl;
+    if (args[0] == "433")
+    {
+        std::cerr << "Nickname already in use" << std::endl;
+        close(socket);
+        exit(1);
+    }
     if (args[0] == "ERROR")
     {
         close(socket);
