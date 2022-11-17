@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/13 13:50:17 by jmaia            ###   ########.fr       */
+/*   Updated: 2022/11/17 12:45:33 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 #include "initSocket.hpp"
 #include "parser.hpp"
+#include "signal.hpp"
 
 #define PORT 3333
 
@@ -38,6 +39,6 @@ int	main(int ac, char **av)
 	int listenFd = initSocketOrPrintError(PORT);
 	if (listenFd < 0)
 		return (2);
-	std::cout << "Server is listening on port " << PORT << std::endl;
+	signal(SIGINT, sigintHandler);
 	pollRoutine(listenFd);
 }

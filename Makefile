@@ -3,6 +3,7 @@ NAME		=	ircserv
 SRCS		=	main.cpp \
 				poll.cpp \
 				PrivMsg.cpp \
+				signal.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
 						errCannotSendToChan.cpp \
