@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:42:30 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:38:17 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void executeMessage(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
 	if (message.getCommand() == "PASS")
-		executePass(message, clients);
+		executePass(message, clients, channels);
 	else if (message.getCommand() == "PING")
 		executePing(message, clients);
 	else
@@ -30,7 +30,7 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 			if (message.getSender().isLogged())
 			{
 				if (message.getCommand() == "QUIT")
-					executeQuit(message, clients);
+					executeQuit(message, clients, channels);
 				else if (message.getCommand() == "JOIN")
 					executeJoin(message, clients, channels);
 				else if (message.getCommand() == "PART")
@@ -50,7 +50,7 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 				else if (message.getCommand() == "OPER")
 					executeOper(message, clients);
 				else if (message.getCommand() == "KILL")
-					executeKill(message, clients);
+					executeKill(message, clients, channels);
 				else if (message.getCommand() == "RESTART")
 					executeRestart(message);
 			}

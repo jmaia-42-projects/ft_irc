@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:45:30 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:40:40 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "Client.hpp"
 #include "messages.hpp"
 #include "colors.hpp"
+#include "Channel.hpp"
 
 int     Client::_globalId = 0;
 
@@ -141,11 +142,13 @@ void Client::setRecvBuffer(std::string buffer)
 }
 
 
-void	Client::disconnect(std::vector<Client> &clients)
+void	Client::disconnect(std::vector<Client> &clients, std::vector<Channel> &channels)
 {
 	std::cout << RED << "Client " << _id << " disconnected" << RESET << std::endl;
 	if(close(_socket) < 0)
 		std::cout << "Error during socket closing" << std::endl;
+	for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); it++)
+		it->removeMember(*this);
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		if (it->getId() == _id)

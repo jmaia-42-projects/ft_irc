@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:14:35 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:06:06 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:38:06 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "colors.hpp"
 #include <unistd.h>
 
-void    executeKill(Message &message, std::vector<Client> &clients)
+void    executeKill(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels)
 {
 	if (message.getParameters().size() < 2)
 		sendErrNeedMoreParams(message.getSender(), "KILL");
@@ -32,7 +32,7 @@ void    executeKill(Message &message, std::vector<Client> &clients)
                     sendMessage(clients[i], ":" + message.getSender().getIdentifier() + " KILL " + clients[i].getNickname() + " :" + message.getParameters()[1]);
                     sendMessage(clients[i], "ERROR :Killed by " + message.getSender().getNickname() + " (" + message.getParameters()[1] + ")");
                     std::string identifier = clients[i].getIdentifier();
-                    clients[i].disconnect(clients);
+                    clients[i].disconnect(clients, channels);
                     sendMessages(clients, ":" + identifier + " QUIT :Killed by " + message.getSender().getNickname() + " (" + message.getParameters()[1] + ")");
                     return ;
                 }

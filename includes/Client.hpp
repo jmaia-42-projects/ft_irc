@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:17:36 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:45:13 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:35:55 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <vector>
 
 # include "MessageReceiver.hpp"
+
+class Channel;
 
 class Client:	public MessageReceiver
 {
@@ -45,7 +47,7 @@ class Client:	public MessageReceiver
 		std::string	getRecvBuffer(void) const;
 		void	setRecvBuffer(std::string buffer);
 		std::string	getIdentifier(void) const;
-		void	disconnect(std::vector<Client> &clients);
+		void	disconnect(std::vector<Client> &clients, std::vector<Channel> &channels);
 		bool	isOperator(void) const;
 		void	setOperator(void);
 

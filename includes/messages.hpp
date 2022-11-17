@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:42:17 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:38:11 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);
 void    executeNick(Message &message, std::vector<Client> &clients);
 void    executeUser(Message &message, std::vector<Client> &clients);
-void    executePass(Message &message, std::vector<Client> &clients);
-void    executeQuit(Message &message, std::vector<Client> &clients);
+void    executePass(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
+void    executeQuit(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeJoin(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executePart(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeTopic(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
@@ -38,7 +38,7 @@ void    executeKick(Message &message, std::vector<Client> &clients, std::vector<
 void    executePing(Message &message, std::vector<Client> &clients);
 void    executeMotd(Message &message);
 void    executeOper(Message &message, std::vector<Client> &clients);
-void    executeKill(Message &message, std::vector<Client> &clients);
+void    executeKill(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeRestart(Message &message);
 
 #endif
