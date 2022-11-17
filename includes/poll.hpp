@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:50:19 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:35:53 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:48:28 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "Client.hpp"
 # include "Channel.hpp"
 # include "status.hpp"
+# include "messages.hpp"
 
 void    treatMessage(std::string message, Client &sender, std::vector<Client> &clients, std::vector<Channel> &channels);
 

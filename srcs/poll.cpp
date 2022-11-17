@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 12:36:13 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:49:15 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,12 @@ void pollRoutine(int serverSocket)
 		}
 		if(gStatus == 2)
 		{
+			sendMessages(clients, "ERROR : Server is restarting...");
 			std::cout << PURPLE << "Server is restarting..." << RESET << std::endl;
 			gStatus = 1;
 		}
+		else
+			sendMessages(clients, "ERROR : Server is shutting down...");
 		for (size_t i = 0; i < clients.size(); i++)
 		{
 			close(clients.at(i).getSocket());
