@@ -2,7 +2,6 @@ NAME		=	ircserv
 
 SRCS		=	main.cpp \
 				poll.cpp \
-				PrivMsg.cpp \
 				signal.cpp \
 				$(addprefix messages/, \
 					$(addprefix numeric_replies/, \
@@ -34,6 +33,7 @@ SRCS		=	main.cpp \
 					Message.cpp \
 					Channel.cpp \
 					ModeModificator.cpp \
+					PrivMsg.cpp \
 				) \
 				$(addprefix parser/, \
 					checkArgsValidity.cpp \
