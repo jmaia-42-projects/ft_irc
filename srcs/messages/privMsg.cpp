@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 14:09:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/18 14:13:03 by jmaia            ###   ###               */
+/*   Updated: 2022/11/18 14:37:19 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "PrivMsg.hpp"
 
 static void	checkAllValid(PrivMsg &privMsg, std::vector<MessageReceiver *> targets, Client &client);
-static std::vector<MessageReceiver *>	getTargets(PrivMsg privMsg, std::vector<Client> &clients, std::vector<Channel> &channels, Client &sender);
+static std::vector<MessageReceiver *>	getTargets(PrivMsg privMsg, std::vector<Client> &clients, std::vector<Channel> &channels, Client &sender, bool isPrivMsg);
 static bool	isMessageForMe(MessageReceiver *receiver, PrivMsg &privMsg);
 static void								sendPrivMsg(MessageReceiver *target, Client &sender, std::string message);
 
@@ -30,16 +30,16 @@ void	executePrivMsg(Message &message, std::vector<Client> &clients, std::vector<
 	Optionnal<PrivMsg>	optPrivMsg = PrivMsg::construct(message);
 	std::vector<MessageReceiver *>	targets;
 
-	if (message.getParameters().size() < 2)
+	if (message.getParameters().size() < 2 && message.getCommand() == "PRIVMSG")
 		sendErrNeedMoreParams(message.getSender(), message.getCommand());
 	if (!optPrivMsg.isValid())
 		return ;
-	targets = getTargets(optPrivMsg.getObj(), clients, channels, message.getSender());
+	targets = getTargets(optPrivMsg.getObj(), clients, channels, message.getSender(), message.getCommand() == "PRIVMSG");
 	for (std::vector<MessageReceiver *>::iterator it = targets.begin(); it != targets.end(); it++)
 		sendPrivMsg(*it, message.getSender(), message.getOriginalMessage());
 }
 
-static std::vector<MessageReceiver *>	getTargets(PrivMsg privMsg, std::vector<Client> &clients, std::vector<Channel> &channels, Client &sender)
+static std::vector<MessageReceiver *>	getTargets(PrivMsg privMsg, std::vector<Client> &clients, std::vector<Channel> &channels, Client &sender, bool isPrivMsg)
 {
 	std::vector<MessageReceiver *>	targets;
 
@@ -52,7 +52,8 @@ static std::vector<MessageReceiver *>	getTargets(PrivMsg privMsg, std::vector<Cl
 		else
 			it++;
 	}
-	checkAllValid(privMsg, targets, sender);
+	if (isPrivMsg)
+		checkAllValid(privMsg, targets, sender);
 	return (targets);
 }
 

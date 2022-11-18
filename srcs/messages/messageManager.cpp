@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:37:17 by jmaia            ###   ###               */
+/*   Updated: 2022/11/18 14:35:06 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 					executeTopic(message, clients, channels);
 				else if (message.getCommand() == "MODE")
 					executeMode(message, clients, channels);
-				else if (message.getCommand() == "PRIVMSG")
+				else if (message.getCommand() == "PRIVMSG" || message.getCommand() == "NOTICE")
 					executePrivMsg(message, clients, channels);
 				else if (message.getCommand() == "INVITE")
 					executeInvite(message, clients, channels);
