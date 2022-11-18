@@ -10,6 +10,7 @@ SRCS		=	main.cpp \
 						errCannotSendToChan.cpp \
 						errNeedMoreParams.cpp \
 						errNeedToBeInChannel.cpp \
+						errNoSuchNick.cpp \
 						errNotAnOperator.cpp \
 					) \
 					messageManager.cpp \
