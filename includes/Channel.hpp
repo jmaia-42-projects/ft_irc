@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:14:50 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:14:52 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:20:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ class Channel:	public MessageReceiver
 		bool canClientSendMessage(Client &client);
 		bool		isBanned(Client &client);
 		bool		hasMode(char c);
-		bool		hasUserMode(Client &client, char c);
+		bool		isVoiceAuthorized(Client &client);
 		void		changeNickname(std::string oldNickname, std::string newNickname);
 
 	private:

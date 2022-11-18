@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:55:03 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/16 18:22:17 by jmaia            ###   ###               */
+/*   Updated: 2022/11/18 13:24:39 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "PrivMsg.hpp"
 
-static bool areTargetsValid(std::string targets);
 static PrivMsgStatus getMessageValidity(Message &msg);
 static std::vector<std::string>	split(std::string msg, char delim);
 
@@ -52,24 +51,6 @@ static PrivMsgStatus getMessageValidity(Message &msg)
 	if (params.size() != 2)
 		return (ERR_NEEDMOREPARAMS);
 	return (SUCCESS);
-}
-
-static bool areTargetsValid(std::string targets)
-{
-	bool	isValid;
-
-	isValid = false;
-	for (std::string::iterator it = targets.begin(); it != targets.end(); it++)
-	{
-		if (!isValid && *it == ',')
-			return (false);
-		isValid = *it != ',';
-		if (*it == ',')
-			isValid = false;
-		else
-			isValid = true;
-	}
-	return (isValid);
 }
 
 PrivMsg	PrivMsg::parseMessage(Message &msg)
