@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 12:38:11 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:13:58 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);
-void    executeNick(Message &message, std::vector<Client> &clients);
+void    executeNick(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeUser(Message &message, std::vector<Client> &clients);
 void    executePass(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeQuit(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);

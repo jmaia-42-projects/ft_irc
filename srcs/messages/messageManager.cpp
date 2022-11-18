@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 12:38:17 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:14:05 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 		if (message.getSender().hasGivedPassword())
 		{
 			if (message.getCommand() == "NICK")
-				executeNick(message, clients);
+				executeNick(message, clients, channels);
 			if (message.getCommand() == "USER")
 				executeUser(message, clients);
 			if (message.getSender().isLogged())

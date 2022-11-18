@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 16:30:15 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:21:50 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,4 +335,26 @@ bool Channel::hasUserMode(Client &client, char c) // TODO
 		}
 	}
 	return false;
+}
+
+static void updateNickname(std::vector<std::string> &list, std::string oldNick, std::string newNick)
+{
+	for (size_t i = 0; i < list.size(); i++)
+	{
+		if (list[i] == oldNick)
+		{
+			list.erase(list.begin() + i);
+			list.push_back(newNick);
+			return ;
+		}
+	}
+}
+
+void		Channel::changeNickname(std::string oldNickname, std::string newNickname)
+{
+	updateNickname(_clients, oldNickname, newNickname);
+	updateNickname(_operators, oldNickname, newNickname);
+	updateNickname(_voiceAuthrized, oldNickname, newNickname);
+	updateNickname(_banned, oldNickname, newNickname);
+	updateNickname(_invited, oldNickname, newNickname);
 }
