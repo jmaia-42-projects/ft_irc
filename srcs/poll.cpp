@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:19:38 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 12:49:15 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:35:11 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ std::string acceptMessage(Client &client)
 	return message;
 }
 
-void	reveiveMessage(Client &client, std::vector<Client> &clients, std::vector<Channel> &channels)
+void	reveiveMessage(Client &client, std::vector<Client> &clients, std::vector<Channel> &channels, std::string password)
 {
 	std::string message = acceptMessage(client);
 	if (message.length() > 0)
-		treatMessage(message, client, clients, channels);
+		treatMessage(message, client, clients, channels, password);
 	else
 		client.disconnect(clients, channels);
 }
 
-void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &clients, std::vector<Channel> &channels)
+void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &clients, std::vector<Channel> &channels, std::string password)
 {
 	if (pollSet.revents & POLLIN)
 	{
@@ -75,7 +75,7 @@ void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &
 			{
 				if (clients.at(j).getSocket() == pollSet.fd)
 				{
-					reveiveMessage(clients.at(j), clients, channels);
+					reveiveMessage(clients.at(j), clients, channels, password);
 					return ;
 				}
 			}
@@ -85,7 +85,7 @@ void	treatPollFd(struct pollfd &pollSet, int serverSocket, std::vector<Client> &
 
 int gStatus = 0;
 
-void pollRoutine(int serverSocket)
+void pollRoutine(int serverSocket, std::string password)
 {
 	std::vector<Client> clients;
 	std::vector<Channel> channels;
@@ -102,7 +102,7 @@ void pollRoutine(int serverSocket)
 			exportPollSet(pollSet, serverSocket, clients);
 			poll(pollSet, inPoll, -1);
 			for (size_t i = 0; i < inPoll; i++)
-				treatPollFd(pollSet[i], serverSocket, clients, channels);
+				treatPollFd(pollSet[i], serverSocket, clients, channels, password);
 		}
 		if(gStatus == 2)
 		{

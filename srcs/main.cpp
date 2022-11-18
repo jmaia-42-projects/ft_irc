@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 20:40:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/17 12:45:33 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:31:40 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@
 #include "initSocket.hpp"
 #include "parser.hpp"
 #include "signal.hpp"
-
-#define PORT 3333
-
-void    pollRoutine(int serverSocket);
+#include "poll.hpp"
 
 int	main(int ac, char **av)
 {
-	int	err;
-	err = checkArgsValidity(ac, av);
+	int				err;
+	unsigned short	port;
+	std::string		password;
+
+	err = parseArgs(ac, av, port, password);
 	if (err)
 		return (err);
-	int listenFd = initSocketOrPrintError(PORT);
+	int listenFd = initSocketOrPrintError(port);
 	if (listenFd < 0)
 		return (2);
 	signal(SIGINT, sigintHandler);
-	pollRoutine(listenFd);
+	pollRoutine(listenFd, password);
 }

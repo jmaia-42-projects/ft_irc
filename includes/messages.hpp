@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:47:57 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:13:58 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:36:39 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    sendMessage(Client &receiver, std::string text);
 void    sendMessages(std::vector<Client> &clients, std::string text);
 void    executeNick(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeUser(Message &message, std::vector<Client> &clients);
-void    executePass(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
+void    executePass(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels, std::string password);
 void    executeQuit(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executeJoin(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);
 void    executePart(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels);

@@ -6,17 +6,17 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:21 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:14:05 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:37:17 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "messages.hpp"
 #include "colors.hpp"
 
-void executeMessage(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels)
+void executeMessage(Message &message, std::vector<Client> &clients, std::vector<Channel> &channels, std::string password)
 {
 	if (message.getCommand() == "PASS")
-		executePass(message, clients, channels);
+		executePass(message, clients, channels, password);
 	else if (message.getCommand() == "PING")
 		executePing(message, clients);
 	else
@@ -58,7 +58,7 @@ void executeMessage(Message &message, std::vector<Client> &clients, std::vector<
 	}
 }
 
-void treatMessage(std::string message, Client &sender, std::vector<Client> &clients, std::vector<Channel> &channels)
+void treatMessage(std::string message, Client &sender, std::vector<Client> &clients, std::vector<Channel> &channels, std::string password)
 {
 	std::string text = sender.getRecvBuffer() + message;
 	size_t pos;
@@ -67,7 +67,7 @@ void treatMessage(std::string message, Client &sender, std::vector<Client> &clie
 		std::string line = text.substr(0, pos);
 		text = text.substr(pos + 2);
 		Message message(sender, line);
-		executeMessage(message, clients, channels);
+		executeMessage(message, clients, channels, password);
 	}
 	sender.setRecvBuffer(text);
 }
