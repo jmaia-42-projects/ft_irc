@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:21:50 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:41:19 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ Channel & Channel::operator=(const Channel & rhs)
 		this->_clients = rhs._clients;
 		this->_operators = rhs._operators;
 		this->_modes = rhs._modes;
+		this->_invited = rhs._invited;
+		this->_banned = rhs._banned;
+		this->_voiceAuthrized = rhs._voiceAuthrized;
 	}
 	return *this;
 }
