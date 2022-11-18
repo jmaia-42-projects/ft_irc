@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:18:17 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:41:19 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:21:02 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ bool Channel::canClientSendMessage(Client &client)
 {
 	if (this->isBanned(client))
 		return (false);
-	if (this->hasMode('m') && !(this->isOperator(client) || this->hasUserMode(client, 'v')))
+	if (this->hasMode('m') && !(this->isOperator(client) || this->isVoiceAuthorized(client)))
 		return (false);
 	return (true);
 }
@@ -327,15 +327,12 @@ bool Channel::hasMode(char c)
 	return (_modes[c] > 0);
 }
 
-bool Channel::hasUserMode(Client &client, char c) // TODO
+bool Channel::isVoiceAuthorized(Client &client)
 {
-	if (c == 'v')
+	for (size_t i = 0; i < _voiceAuthrized.size(); i++)
 	{
-		for (size_t i = 0; i < _voiceAuthrized.size(); i++)
-		{
-			if (_voiceAuthrized[i] == client.getNickname())
-				return true;
-		}
+		if (_voiceAuthrized[i] == client.getNickname())
+			return true;
 	}
 	return false;
 }
