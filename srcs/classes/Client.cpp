@@ -6,7 +6,7 @@
 /*   By: dhubleur <dhubleur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:18:09 by dhubleur          #+#    #+#             */
-/*   Updated: 2022/11/17 12:40:40 by dhubleur         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:44:43 by dhubleur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,20 @@ void Client::setRecvBuffer(std::string buffer)
 
 void	Client::disconnect(std::vector<Client> &clients, std::vector<Channel> &channels)
 {
-	std::cout << RED << "Client " << _id << " disconnected" << RESET << std::endl;
 	if(close(_socket) < 0)
 		std::cout << "Error during socket closing" << std::endl;
 	for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); it++)
 		it->removeMember(*this);
+	for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end();)
+	{
+		if (it->isEmpty())
+		{
+			std::cout << BLUE << "Channel " << it->getName() << " was deleted" << RESET << std::endl;
+			it = channels.erase(it);
+		}
+		else
+			it++;
+	}
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		if (it->getId() == _id)
@@ -157,6 +166,7 @@ void	Client::disconnect(std::vector<Client> &clients, std::vector<Channel> &chan
 			break;
 		}
 	}
+	std::cout << RED << "Client " << _id << " disconnected" << RESET << std::endl;
 }
 
 std::string	Client::getName(void)
